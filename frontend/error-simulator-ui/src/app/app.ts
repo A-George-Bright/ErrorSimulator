@@ -1,5 +1,5 @@
-import { Component, signal } from '@angular/core';
-
+import { Component, signal, OnInit, OnDestroy } from '@angular/core';
+import { interval } from 'rxjs';
 import { SimulateService } from './simulate';
 
 @Component({
@@ -9,23 +9,39 @@ import { SimulateService } from './simulate';
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App {
+export class App implements OnInit, OnDestroy {
 
   protected readonly title = signal('error-simulator-ui');
 
   cpu = 0;
   ram = 0;
+  private intervalId: any;
 
   constructor(private sim: SimulateService) {}
 
-  // ✅ MOVE IT HERE (inside class)
+  private refreshStats() {
+    this.sim.stats().subscribe({
+      next: (res: any) => {
+        console.log('Stats response', res);
+        this.cpu = Number(res?.cpu ?? 0);
+        this.ram = Number(res?.ram ?? res?.ramAvailable ?? 0);
+      },
+      error: err => {
+        console.error('Stats update failed', err);
+      }
+    });
+  }
+
   ngOnInit() {
-    setInterval(() => {
-      this.sim.stats().subscribe((res: any) => {
-        this.cpu = res.cpu;
-        this.ram = res.ram;
-      });
-    }, 3000);
+    this.refreshStats();
+
+    this.intervalId = setInterval(() => {
+      this.refreshStats();
+    }, 1000);
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.intervalId);
   }
 
   run(action: string) {
@@ -53,7 +69,10 @@ export class App {
     }
 
     request.subscribe({
-      next: (res: any) => console.log('SUCCESS:', res),
+      next: (res: any) => {
+        console.log('SUCCESS:', res);
+        this.refreshStats();
+      },
       error: (err: any) => console.error('ERROR:', err)
     });
   }
