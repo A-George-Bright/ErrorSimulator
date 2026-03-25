@@ -14,6 +14,8 @@ export class App implements OnInit, OnDestroy {
 
   cpu = signal(0);
   ram = signal(0);
+  connectionStatus = signal<'connected'|'disconnected'>('disconnected');
+  statusMessage = signal('Connecting...');
   private intervalId: any;
 
   constructor(private sim: SimulateService) {}
@@ -24,9 +26,13 @@ export class App implements OnInit, OnDestroy {
         console.log('Stats response', res);
         this.cpu.set(Number(res?.cpu ?? 0));
         this.ram.set(Number(res?.ram ?? res?.ramAvailable ?? 0));
+        this.connectionStatus.set('connected');
+        this.statusMessage.set('Live data streaming');
       },
       error: err => {
         console.error('Stats update failed', err);
+        this.connectionStatus.set('disconnected');
+        this.statusMessage.set('Cannot reach API; retrying...');
       }
     });
   }

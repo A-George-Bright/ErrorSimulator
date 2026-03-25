@@ -2,6 +2,10 @@
   <h1 class="title">Error Simulator</h1>
   <p class="subtitle">Simulate system failures easily</p>
 
+  <div class="status-line" [style.color]="connectionStatus() === 'connected' ? '#4ade80' : '#f87171'" style="font-weight: 600; margin-bottom: 16px;">
+    <strong>Status:</strong> {{ statusMessage() }}
+  </div>
+
   <div class="stats">
     <div class="stat">
       <h3>CPU Usage</h3>
