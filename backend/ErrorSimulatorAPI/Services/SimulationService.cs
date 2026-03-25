@@ -3,6 +3,7 @@
 {
 
     using Microsoft.Data.SqlClient;
+    using System.Diagnostics;
 
     public class SimulationService
     {
@@ -62,6 +63,26 @@
             cmd.Parameters.AddWithValue("@m", message);
 
             cmd.ExecuteNonQuery();
+        }
+
+
+
+        public object GetSystemStats()
+        {
+            var cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
+            var ramCounter = new PerformanceCounter("Memory", "Available MBytes");
+
+            cpuCounter.NextValue(); // first call ignored
+            Thread.Sleep(1000);
+
+            float cpu = cpuCounter.NextValue();
+            float ramAvailable = ramCounter.NextValue();
+
+            return new
+            {
+                cpu = Math.Round(cpu, 2),
+                ramAvailable = ramAvailable
+            };
         }
     }
 }

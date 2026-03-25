@@ -55,6 +55,21 @@ body {
   box-shadow: 0 10px 25px rgba(0,0,0,0.4);
 }
 
+.stats {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-bottom: 30px;
+}
+
+.stat {
+  background: #1e293b;
+  padding: 20px;
+  border-radius: 12px;
+  width: 150px;
+  color: white;
+}
+
 /* Colors */
 .cpu:hover { border-color: #ef4444; }
 .memory:hover { border-color: #3b82f6; }

@@ -4,28 +4,40 @@
 
   <div class="grid">
     <button class="card cpu" (click)="run('cpu')">
-      
+
       <p>High CPU</p>
     </button>
 
     <button class="card memory" (click)="run('memory')">
-      
+
       <p>Memory Leak</p>
     </button>
 
     <button class="card slow" (click)="run('slow')">
-      
+
       <p>Slow API</p>
     </button>
 
     <button class="card db" (click)="run('db')">
-      
+
       <p>DB Failure</p>
     </button>
 
     <button class="card exception" (click)="run('exception')">
-      
+
       <p>Exception</p>
     </button>
+
+    <div class="stats">
+      <div class="stat">
+        <h3>CPU Usage</h3>
+        <p>{{ cpu }} %</p>
+      </div>
+
+      <div class="stat">
+        <h3>Available RAM</h3>
+        <p>{{ ram }} MB</p>
+      </div>
+    </div>
   </div>
 </div>

@@ -65,6 +65,13 @@ namespace ErrorSimulatorAPI.Controllers
         {
             return StatusCode(500, "Manual exception triggered");
         }
+
+        [HttpGet("stats")]
+        public IActionResult Stats()
+        {
+            var data = _service.GetSystemStats();
+            return Ok(data);
+        }
     }
 }
 

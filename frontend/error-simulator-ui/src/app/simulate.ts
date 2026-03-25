@@ -8,7 +8,7 @@ export class SimulateService {
 
   api = 'https://localhost:7290/api/simulate';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   cpu() {
     return this.http.post(`${this.api}/cpu`, {});
@@ -28,5 +28,9 @@ export class SimulateService {
 
   exception() {
     return this.http.post(`${this.api}/exception`, {});
+  }
+
+  stats() {
+    return this.http.get(`${this.api}/stats`);
   }
 }
