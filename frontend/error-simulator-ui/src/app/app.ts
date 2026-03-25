@@ -1,5 +1,4 @@
 import { Component, signal, OnInit, OnDestroy } from '@angular/core';
-import { interval } from 'rxjs';
 import { SimulateService } from './simulate';
 
 @Component({
@@ -13,8 +12,8 @@ export class App implements OnInit, OnDestroy {
 
   protected readonly title = signal('error-simulator-ui');
 
-  cpu = 0;
-  ram = 0;
+  cpu = signal(0);
+  ram = signal(0);
   private intervalId: any;
 
   constructor(private sim: SimulateService) {}
@@ -23,8 +22,8 @@ export class App implements OnInit, OnDestroy {
     this.sim.stats().subscribe({
       next: (res: any) => {
         console.log('Stats response', res);
-        this.cpu = Number(res?.cpu ?? 0);
-        this.ram = Number(res?.ram ?? res?.ramAvailable ?? 0);
+        this.cpu.set(Number(res?.cpu ?? 0));
+        this.ram.set(Number(res?.ram ?? res?.ramAvailable ?? 0));
       },
       error: err => {
         console.error('Stats update failed', err);
