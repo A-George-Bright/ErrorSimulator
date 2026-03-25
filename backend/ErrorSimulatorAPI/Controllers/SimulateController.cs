@@ -24,13 +24,15 @@ namespace ErrorSimulatorAPI.Controllers
             return Ok(new { message = "CPU started" });
         }
 
-        [HttpPost("memory")]
-        public IActionResult Memory()
+        [HttpGet("cpu/stop")]
+        public IActionResult StopCpu()
         {
-            _service.MemoryLeak();
-            _service.Log("Memory", "Started");
-            return Ok(new { message = "Memory started" });
+            _service.StopCpu();
+            _service.Log("CPU", "Stopped");
+            return Ok(new { message = "CPU stopped" });
         }
+
+        
 
         [HttpPost("slow")]
         public async Task<IActionResult> Slow()
@@ -71,6 +73,28 @@ namespace ErrorSimulatorAPI.Controllers
         {
             var data = _service.GetSystemStats();
             return Ok(data);
+        }
+
+        [HttpGet("memory/start")]
+        public IActionResult StartMemory()
+        {
+            MemoryManager.Allocate2GB();
+            return Ok(new { message = "Allocated 2GB memory" });
+        }
+
+        [HttpGet("memory/stop")]
+        public IActionResult StopMemory()
+        {
+            MemoryManager.ReleaseAll();
+            return Ok(new { message = "Memory released" });
+        }
+
+        [HttpGet("stop-all")]
+        public IActionResult StopAll()
+        {
+            _service.StopAll();
+            _service.Log("StopAll", "CPU and memory released");
+            return Ok(new { message = "All simulation load stopped" });
         }
     }
 }

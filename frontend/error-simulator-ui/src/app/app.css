@@ -90,6 +90,39 @@ body {
 }
 
 
+.dealloc-section {
+  max-width: 840px;
+  margin: 30px auto 0;
+  padding: 20px;
+  border-radius: 16px;
+  background: linear-gradient(145deg, rgba(2, 132, 199, 0.25), rgba(14, 165, 233, 0.2));
+  border: 1px solid rgba(56, 189, 248, 0.35);
+}
+
+.dealloc-section h2 {
+  margin: 0 0 14px;
+  font-size: 18px;
+  color: #38bdf8;
+  text-align: left;
+}
+
+.dealloc-section .grid {
+  background: rgba(15, 23, 42, 0.7);
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(96, 165, 250, 0.7);
+}
+
+.dealloc-section .card {
+  background: #0ea5e9;
+  color: #ffffff;
+}
+
+.dealloc-section .card:hover {
+  background: #38bdf8;
+  border-color: #60a5fa;
+}
+
 /* Colors */
 .cpu:hover { border-color: #ef4444; }
 .memory:hover { border-color: #3b82f6; }

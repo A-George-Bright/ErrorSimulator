@@ -2,7 +2,8 @@
   <h1 class="title">Error Simulator</h1>
   <p class="subtitle">Simulate system failures easily</p>
 
-  <div class="status-line" [style.color]="connectionStatus() === 'connected' ? '#4ade80' : '#f87171'" style="font-weight: 600; margin-bottom: 16px;">
+  <div class="status-line" [style.color]="connectionStatus() === 'connected' ? '#4ade80' : '#f87171'"
+    style="font-weight: 600; margin-bottom: 16px;">
     <strong>Status:</strong> {{ statusMessage() }}
   </div>
 
@@ -20,11 +21,11 @@
 
   <div class="grid">
     <button class="card cpu" (click)="run('cpu')">
-      <p>High CPU</p>
+      <p>Spike CPU Usage by 40%</p>
     </button>
 
-    <button class="card memory" (click)="run('memory')">
-      <p>Memory Leak</p>
+    <button class="card memory" (click)="run('memoryStart')">
+      <p>Allocate 2GB RAM</p>
     </button>
 
     <button class="card slow" (click)="run('slow')">
@@ -38,5 +39,26 @@
     <button class="card exception" (click)="run('exception')">
       <p>Exception</p>
     </button>
+  </div>
+
+  <div class="dealloc-section" style="margin-top: 24px;">
+    <h2>Deallocation</h2>
+    <div class="grid">
+      <button class="card release" (click)="run('cpuStop')">
+        <p>Release CPU</p>
+      </button>
+
+      <button class="card release" (click)="run('memoryStop')">
+        <p>Release RAM</p>
+      </button>
+
+      <button class="card release" (click)="run('stopAll')">
+        <p>Stop All (CPU + RAM)</p>
+      </button>
+
+      <button class="card refresh" (click)="refreshStats()">
+        <p>Refresh Stats</p>
+      </button>
+    </div>
   </div>
 </div>

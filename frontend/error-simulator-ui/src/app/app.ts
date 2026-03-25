@@ -14,18 +14,18 @@ export class App implements OnInit, OnDestroy {
 
   cpu = signal(0);
   ram = signal(0);
-  connectionStatus = signal<'connected'|'disconnected'>('disconnected');
+  connectionStatus = signal<'connected' | 'disconnected'>('disconnected');
   statusMessage = signal('Connecting...');
   private intervalId: any;
 
-  constructor(private sim: SimulateService) {}
+  constructor(private sim: SimulateService) { }
 
-  private refreshStats() {
+  refreshStats() {
     this.sim.stats().subscribe({
       next: (res: any) => {
         console.log('Stats response', res);
-        this.cpu.set(Number(res?.cpu ?? 0));
-        this.ram.set(Number(res?.ram ?? res?.ramAvailable ?? 0));
+        this.cpu.set(Number(res?.systemCpu ?? res?.cpu ?? 0));
+        this.ram.set(Number(res?.ramAvailableMb ?? res?.ram ?? res?.ramAvailable ?? 0));
         this.connectionStatus.set('connected');
         this.statusMessage.set('Live data streaming');
       },
@@ -56,8 +56,8 @@ export class App implements OnInit, OnDestroy {
       case 'cpu':
         request = this.sim.cpu();
         break;
-      case 'memory':
-        request = this.sim.memory();
+      case 'memoryStart':
+        request = this.sim.memoryStart();
         break;
       case 'slow':
         request = this.sim.slow();
@@ -68,9 +68,20 @@ export class App implements OnInit, OnDestroy {
       case 'exception':
         request = this.sim.exception();
         break;
+      case 'cpuStop':
+        request = this.sim.cpuStop();
+        break;
+      case 'memoryStop':
+        request = this.sim.memoryStop();
+        break;
+      case 'stopAll':
+        request = this.sim.stopAll();
+        break;
+
       default:
         console.error('Unknown action');
         return;
+
     }
 
     request.subscribe({

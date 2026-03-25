@@ -40,8 +40,12 @@ export class SimulateService {
     return this.tryPost('cpu');
   }
 
-  memory() {
-    return this.tryPost('memory');
+  cpuStop() {
+    return this.tryUrl('cpu/stop');
+  }
+
+  stopAll() {
+    return this.tryUrl('stop-all');
   }
 
   slow() {
@@ -58,5 +62,13 @@ export class SimulateService {
 
   stats() {
     return this.tryUrl<any>('stats');
+  }
+
+  memoryStart() {
+    return this.tryUrl('memory/start');
+  }
+
+  memoryStop() {
+    return this.tryUrl('memory/stop');
   }
 }
