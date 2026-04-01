@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(powershell -Command \"netstat -ano | findstr ':4200'\")"
+    ]
+  }
+}

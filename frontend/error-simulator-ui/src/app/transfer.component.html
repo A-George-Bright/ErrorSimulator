@@ -7,57 +7,78 @@
 
       <div class="row">
         <div class="field">
-          <label>Transaction ID</label>
+          <label>From Account</label>
           <input type="text"
-            [ngModel]="request().transactionId"
-            (ngModelChange)="request.set({...request(), transactionId: $event})"
-            name="txnId"
+            [ngModel]="request().fromAccountNumber"
+            (ngModelChange)="request.set({...request(), fromAccountNumber: $event})"
+            name="fromAccount"
+            placeholder="ACC-000001"
+            #fromAccount="ngModel"
             required>
+          @if (fromAccount.invalid && fromAccount.touched) {
+            <span class="field-error">From account is required</span>
+          }
         </div>
 
         <div class="field">
-          <label>Amount</label>
-          <input type="number"
-            [ngModel]="request().amount"
-            (ngModelChange)="request.set({...request(), amount: $event})"
-            name="amount"
+          <label>To Account</label>
+          <input type="text"
+            [ngModel]="request().toAccountNumber"
+            (ngModelChange)="request.set({...request(), toAccountNumber: $event})"
+            name="toAccount"
+            placeholder="ACC-000002"
+            #toAccount="ngModel"
             required>
+          @if (toAccount.invalid && toAccount.touched) {
+            <span class="field-error">To account is required</span>
+          }
         </div>
       </div>
 
-      <div class="row">
-        <div class="field">
-          <label>From</label>
-          <input type="number"
-            [ngModel]="request().fromAccountId"
-            (ngModelChange)="request.set({...request(), fromAccountId: $event})"
-            name="fromId">
-        </div>
-
-        <div class="field">
-          <label>To</label>
-          <input type="number"
-            [ngModel]="request().toAccountId"
-            (ngModelChange)="request.set({...request(), toAccountId: $event})"
-            name="toId">
-        </div>
+      <div class="field">
+        <label>Amount (USD)</label>
+        <input type="number"
+          [ngModel]="request().amount"
+          (ngModelChange)="request.set({...request(), amount: $event})"
+          name="amount"
+          min="0.01"
+          step="0.01"
+          #amountField="ngModel"
+          required>
+        @if (amountField.invalid && amountField.touched) {
+          <span class="field-error">
+            @if (amountField.errors?.['required']) { Amount is required }
+            @else { Amount must be greater than 0 }
+          </span>
+        }
       </div>
 
-      <button 
+      <button
         type="submit"
         class="btn"
-        [disabled]="loading() || transferForm.invalid">
-
-        {{ loading() ? 'Processing...' : 'Transfer Money' }}
+        [disabled]="loading() || transferForm.invalid"
+        [attr.aria-busy]="loading()">
+        @if (loading()) {
+          <span class="btn-spinner"></span> Processing...
+        } @else {
+          Transfer Money
+        }
       </button>
 
     </form>
   </div>
 
-  <div *ngIf="response()" class="response" [class]="response()?.status?.toLowerCase()">
-    <h3>{{ response()?.status }}</h3>
-    <p>{{ response()?.message }}</p>
-    <p *ngIf="response()?.balance">Balance: {{ response()?.balance }}</p>
-  </div>
+  @if (response(); as res) {
+    <div class="response" [class]="res.status.toLowerCase()">
+      <h3>{{ res.status }}</h3>
+      <p>{{ res.message }}</p>
+      @if (res.reference) {
+        <p class="reference">Ref: {{ res.reference }}</p>
+      }
+      @if (res.failureReason) {
+        <p class="failure-reason">Reason: {{ res.failureReason }}</p>
+      }
+    </div>
+  }
 
 </div>

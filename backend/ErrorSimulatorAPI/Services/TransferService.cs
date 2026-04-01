@@ -1,4 +1,4 @@
-﻿using ErrorSimulatorAPI.DTOs;
+using ErrorSimulatorAPI.DTOs;
 using ErrorSimulatorAPI.Interfaces;
 using ErrorSimulatorAPI.Models;
 using ErrorSimulatorAPI.Services;
@@ -15,7 +15,6 @@ namespace ErrorSimulatorAPI.Services
         private readonly SimulationService _simulation;
         private readonly ILogger<TransferService> _logger;
 
-        // 🔁 Retry (no retry for timeout)
         private static readonly AsyncPolicy _retryPolicy =
             Policy
                 .Handle<Exception>(ex => !(ex is OperationCanceledException))
@@ -35,25 +34,25 @@ namespace ErrorSimulatorAPI.Services
 
         public async Task<TransferResponse> TransferAsync(TransferRequest request)
         {
+            // Server-generated ID — never exposed to the caller
+            var txnId = Guid.NewGuid();
             string failureCause = "";
 
-            _logger.LogInformation("Txn START: {TxnId}", request.TransactionId);
+            _logger.LogInformation(
+                "Txn START: {TxnId} | {From} → {To} | Amount: {Amount}",
+                txnId, request.FromAccountNumber, request.ToAccountNumber, request.Amount);
 
             try
             {
                 return await _retryPolicy.ExecuteAsync(async () =>
                 {
-                    var response = new TransferResponse
-                    {
-                        TransactionId = request.TransactionId,
-                        Timestamp = DateTime.UtcNow
-                    };
+                    var response = new TransferResponse { Timestamp = DateTime.UtcNow };
 
                     // 🔥 CPU → FAIL
                     if (_simulation.IsCpuRunning)
                     {
                         failureCause = "High CPU load";
-                        _logger.LogWarning("CPU HIT: {TxnId}", request.TransactionId);
+                        _logger.LogWarning("CPU HIT: {TxnId}", txnId);
                         throw new Exception("High CPU load");
                     }
 
@@ -64,7 +63,7 @@ namespace ErrorSimulatorAPI.Services
                         throw new OperationCanceledException();
                     }
 
-                    // 💥 DB FAILURE MODES (UPDATED 🔥)
+                    // 💥 DB FAILURE MODES
                     switch (_simulation.CurrentDbFailure)
                     {
                         case DbFailureMode.HardDown:
@@ -88,23 +87,28 @@ namespace ErrorSimulatorAPI.Services
                     // 🎲 Random failure
                     _simulator.Simulate();
 
-                    // 🔁 DUPLICATE
-                    if (await _db.Transactions.AnyAsync(x => x.TransactionId == request.TransactionId))
+                    // 🔁 DUPLICATE — guards against Polly retry edge cases where
+                    //    a prior attempt committed but threw before returning
+                    if (await _db.Transactions.AnyAsync(x => x.TransactionId == txnId))
                     {
-                        _logger.LogInformation("Txn DUPLICATE: {TxnId}", request.TransactionId);
-
+                        _logger.LogInformation("Txn DUPLICATE (retry guard): {TxnId}", txnId);
                         response.Success = false;
                         response.Status = "DUPLICATE";
-                        response.Message = "Duplicate transaction";
+                        response.Message = "Transaction already processed";
                         return response;
                     }
 
                     // 👤 USERS
-                    var sender = await _db.Users.FindAsync(request.FromUserId);
-                    var receiver = await _db.Users.FindAsync(request.ToUserId);
+                    var sender = await _db.Users.FirstOrDefaultAsync(
+                        u => u.AccountNumber == request.FromAccountNumber);
+                    var receiver = await _db.Users.FirstOrDefaultAsync(
+                        u => u.AccountNumber == request.ToAccountNumber);
 
                     if (sender == null || receiver == null)
-                        throw new Exception("Invalid users");
+                        throw new Exception("Invalid account number");
+
+                    if (!sender.IsActive || !receiver.IsActive)
+                        throw new Exception("Account is inactive");
 
                     if (sender.Balance < request.Amount)
                         throw new Exception("Insufficient balance");
@@ -113,60 +117,61 @@ namespace ErrorSimulatorAPI.Services
                     sender.Balance -= request.Amount;
                     receiver.Balance += request.Amount;
 
+                    var now = DateTime.UtcNow;
+                    var reference = $"TXN-{now:yyyyMMdd}-{txnId.ToString("N")[..8].ToUpper()}";
+
                     _db.Transactions.Add(new Transaction
                     {
-                        TransactionId = request.TransactionId,
+                        Id = Guid.NewGuid(),
+                        TransactionId = txnId,
+                        Reference = reference,
+                        FromUserId = sender.Id,
+                        ToUserId = receiver.Id,
                         Amount = request.Amount,
-                        Status = "SUCCESS"
+                        Currency = sender.Currency,
+                        Status = "SUCCESS",
+                        CreatedAt = now,
+                        CompletedAt = now
                     });
 
                     var cts = new CancellationTokenSource(TimeSpan.FromSeconds(2));
                     await _db.SaveChangesAsync(cts.Token);
 
-                    _logger.LogInformation("Txn SUCCESS: {TxnId}", request.TransactionId);
+                    _logger.LogInformation("Txn SUCCESS: {TxnId} | Ref: {Ref}", txnId, reference);
 
                     response.Success = true;
                     response.Status = "SUCCESS";
-                    response.Message = "Transaction completed";
+                    response.Message = "Transaction completed successfully";
+                    response.Reference = reference;
 
                     return response;
                 });
             }
             catch (OperationCanceledException)
             {
-                _logger.LogWarning(
-                    "Txn TIMEOUT: {TxnId} | Reason: {Reason}",
-                    request.TransactionId,
-                    failureCause
-                );
+                _logger.LogWarning("Txn TIMEOUT: {TxnId} | Reason: {Reason}", txnId, failureCause);
 
                 return new TransferResponse
                 {
                     Success = false,
                     Status = "TIMEOUT",
-                    Message = $"Transaction timeout ({failureCause})",
-                    TransactionId = request.TransactionId,
+                    Message = "Transaction timed out — please try again",
+                    FailureReason = failureCause,
                     Timestamp = DateTime.UtcNow
                 };
             }
             catch (Exception ex)
             {
-                var reason = !string.IsNullOrEmpty(failureCause)
-                    ? failureCause
-                    : ex.Message;
+                var reason = !string.IsNullOrEmpty(failureCause) ? failureCause : ex.Message;
 
-                _logger.LogError(
-                    "Txn FAILED: {TxnId} | Reason: {Reason}",
-                    request.TransactionId,
-                    reason
-                );
+                _logger.LogError("Txn FAILED: {TxnId} | Reason: {Reason}", txnId, reason);
 
                 return new TransferResponse
                 {
                     Success = false,
                     Status = "FAILED",
-                    Message = $"Transaction failed ({reason})",
-                    TransactionId = request.TransactionId,
+                    Message = "Transaction failed — please try again",
+                    FailureReason = reason,
                     Timestamp = DateTime.UtcNow
                 };
             }

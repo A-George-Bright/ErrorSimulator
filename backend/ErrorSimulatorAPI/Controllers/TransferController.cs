@@ -20,7 +20,9 @@ namespace ErrorSimulatorAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Transfer(TransferRequest request)
         {
-            _logger.LogInformation("API TRANSFER REQUEST: {TxnId}", request.TransactionId);
+            _logger.LogInformation(
+                "API TRANSFER REQUEST: {From} → {To} | Amount: {Amount}",
+                request.FromAccountNumber, request.ToAccountNumber, request.Amount);
 
             var result = await _service.TransferAsync(request);
 
@@ -31,16 +33,16 @@ namespace ErrorSimulatorAPI.Controllers
                     return Ok(result);
 
                 case "DUPLICATE":
-                    _logger.LogWarning("API DUPLICATE: {TxnId}", request.TransactionId);
+                    _logger.LogWarning("API DUPLICATE: {From} → {To}", request.FromAccountNumber, request.ToAccountNumber);
                     return Conflict(result); // 409
 
                 case "TIMEOUT":
-                    _logger.LogWarning("API TIMEOUT: {TxnId}", request.TransactionId);
+                    _logger.LogWarning("API TIMEOUT: {From} → {To}", request.FromAccountNumber, request.ToAccountNumber);
                     return StatusCode(408, result); // 408
 
                 case "FAILED":
                 default:
-                    _logger.LogError("API FAILED: {TxnId}", request.TransactionId);
+                    _logger.LogError("API FAILED: {From} → {To} | Reason: {Reason}", request.FromAccountNumber, request.ToAccountNumber, result.FailureReason);
                     return StatusCode(500, result);
             }
         }

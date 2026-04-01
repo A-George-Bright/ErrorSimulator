@@ -1,18 +1,18 @@
 :root {
-  --primary: #8b5cf6;
-  --primary-dark: #7c3aed;
+  --primary: #7c3aed;
+  --primary-dark: #6d28d9;
   --danger: #ef4444;
   --warning: #f59e0b;
-  --success: #22c55e;
-  --accent: #ec4899;
+  --success: #16a34a;
+  --accent: #db2777;
   --gray-900: #111827;
   --gray-800: #1f2937;
   --gray-700: #374151;
   --gray-600: #4b5563;
-  --border: rgba(255,255,255,0.08);
-  --glass: rgba(255,255,255,0.05);
-  --shadow: rgba(0,0,0,0.4);
-  --text-muted: #9ca3af;
+  --border: rgba(0, 0, 0, 0.08);
+  --glass: rgba(255, 255, 255, 0.55);
+  --shadow: rgba(100, 100, 150, 0.15);
+  --text-muted: #6b7280;
 }
 
 * {
@@ -27,8 +27,9 @@ html, body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 
-  background: linear-gradient(135deg, var(--gray-900) 0%, var(--gray-800) 50%, #111827 100%);
-  color: #f9fafb;
+  background: linear-gradient(135deg, #ede9fe 0%, #e0e7ff 40%, #fce7f3 100%);
+  background-attachment: fixed;
+  color: #1e1b4b;
 }
 
 /* Button & Interactive Reset */
@@ -57,12 +58,12 @@ html {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
-  
+
   .stats-container {
     flex-direction: column;
     gap: 1rem;
   }
-  
+
   .row {
     flex-direction: column;
     gap: 0.75rem;
@@ -78,7 +79,7 @@ html {
   .app-tabs-container {
     padding: 1rem;
   }
-  
+
   .title {
     font-size: 2rem !important;
   }
@@ -92,20 +93,40 @@ html {
   transform: none !important;
 }
 
-.btn:disabled::after {
-  content: '';
-  width: 16px;
-  height: 16px;
-  border: 2px solid transparent;
-  border-top: 2px solid currentColor;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin-left: 8px;
-  display: inline-block;
+/* ── Snackbar toasts ─────────────────────────────────────────── */
+.toast-success .mdc-snackbar__surface {
+  background: #dcfce7 !important;
+  color: #14532d !important;
+  border-left: 4px solid #22c55e;
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
+.toast-error .mdc-snackbar__surface {
+  background: #fee2e2 !important;
+  color: #7f1d1d !important;
+  border-left: 4px solid #ef4444;
+}
+
+.toast-warning .mdc-snackbar__surface {
+  background: #fef3c7 !important;
+  color: #78350f !important;
+  border-left: 4px solid #f59e0b;
+}
+
+.toast-info .mdc-snackbar__surface {
+  background: #dbeafe !important;
+  color: #1e3a5f !important;
+  border-left: 4px solid #3b82f6;
+}
+
+.mdc-snackbar__surface {
+  border-radius: 10px !important;
+  font-size: 0.9rem !important;
+  min-width: 320px !important;
+}
+
+.mat-mdc-snack-bar-action {
+  color: inherit !important;
+  opacity: 0.7;
 }
 
 /* Status Animations */
