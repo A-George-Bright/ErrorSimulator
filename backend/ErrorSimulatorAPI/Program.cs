@@ -1,23 +1,17 @@
 using ErrorSimulatorAPI.Interfaces;
-using ErrorSimulatorAPI.Models;
 using ErrorSimulatorAPI.Services;
 using ErrorSimulatorAPI.Simulation;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
-using System.IO;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 🔥 FIXED LOG PATH (ABSOLUTE)
+// 🔥 LOG PATH
 var logFolder = Path.Combine(Directory.GetCurrentDirectory(), "logs");
-
-// Ensure folder exists
 Directory.CreateDirectory(logFolder);
-
-// Debug: print path
 Console.WriteLine($"🔥 Logs will be saved at: {logFolder}");
 
-// 🔥 SERILOG CONFIGURATION
+// 🔥 SERILOG
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Information()
     .WriteTo.Console()
@@ -30,7 +24,6 @@ Log.Logger = new LoggerConfiguration()
 
 builder.Host.UseSerilog();
 
-// Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -42,8 +35,10 @@ builder.Services.AddSingleton<SimulationState>();
 
 builder.Services.AddScoped<ITransferService, TransferService>();
 
+// 🗄️ MYSQL (Pomelo)
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")!;
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseInMemoryDatabase("TestDb"));
+    options.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 45))));
 
 // CORS
 builder.Services.AddCors(options =>
@@ -54,22 +49,14 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// 🔥 SEED DATA
+// 🔄 AUTO-MIGRATE ON STARTUP
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-
-    db.Users.AddRange(
-        new User { Id = 1, Balance = 1000000 },
-        new User { Id = 2, Balance = 10000}
-    );
-
-    db.SaveChanges();
-
-    Log.Information("Database seeded with initial users");
+    db.Database.Migrate();
+    Log.Information("Database migrated successfully");
 }
 
-// Middleware
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -77,14 +64,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors("AllowAll");
-
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
 
-// 🔥 TEST LOG (FORCE FILE CREATION)
 Log.Information("🔥 Application started successfully");
 Log.Information("🔥 Log system initialized and working");
 

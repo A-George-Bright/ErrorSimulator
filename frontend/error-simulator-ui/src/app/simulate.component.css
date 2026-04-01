@@ -5,9 +5,9 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--text-muted);
+  color: #4c1d95;
   padding-bottom: 0.6rem;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid rgba(124, 58, 237, 0.15);
 }
 
 /* Stats Row */
@@ -18,19 +18,20 @@
 
 .stat-card {
   flex: 1;
-  background: var(--glass);
-  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.8);
   border-radius: 14px;
   padding: 1.4rem;
   text-align: center;
-  backdrop-filter: blur(16px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 4px 16px rgba(100, 100, 150, 0.1), 0 1px 0 rgba(255,255,255,0.9) inset;
   transition: all 0.3s ease;
 }
 
 .stat-card:hover {
-  border-color: rgba(139, 92, 246, 0.25);
-  box-shadow: 0 8px 24px rgba(139, 92, 246, 0.1);
+  border-color: rgba(124, 58, 237, 0.2);
+  box-shadow: 0 8px 24px rgba(124, 58, 237, 0.12);
   transform: translateY(-2px);
 }
 
@@ -44,7 +45,7 @@
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--text-muted);
+  color: #6b7280;
 }
 
 .stat-value {
@@ -59,7 +60,7 @@
 
 .stat-sub {
   font-size: 0.75rem;
-  color: var(--text-muted);
+  color: #6b7280;
   margin: 0.4rem 0 0;
 }
 
@@ -67,7 +68,7 @@
 .stat-bar {
   width: 100%;
   height: 6px;
-  background: var(--border);
+  background: rgba(124, 58, 237, 0.1);
   border-radius: 3px;
   margin-top: 0.6rem;
   overflow: hidden;
@@ -107,13 +108,13 @@
 
 .dot-connected {
   background: var(--success);
-  box-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
+  box-shadow: 0 0 8px rgba(22, 163, 74, 0.5);
   animation: dot-pulse 2s infinite;
 }
 
 .dot-disconnected {
-  background: var(--gray-600);
-  box-shadow: 0 0 8px rgba(75, 85, 99, 0.4);
+  background: #d1d5db;
+  box-shadow: 0 0 8px rgba(209, 213, 219, 0.4);
 }
 
 .dot-demo {
@@ -128,7 +129,7 @@
 }
 
 .disconnected {
-  color: var(--gray-600);
+  color: #9ca3af;
   font-weight: 600;
 }
 
@@ -150,18 +151,19 @@
 }
 
 .card {
-  background: var(--glass);
-  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.8);
   border-radius: 14px;
   padding: 1.5rem;
-  backdrop-filter: blur(16px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   transition: all 0.3s ease;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 16px rgba(100, 100, 150, 0.1), 0 1px 0 rgba(255,255,255,0.9) inset;
 }
 
 .card:hover {
-  border-color: rgba(139, 92, 246, 0.25);
-  box-shadow: 0 8px 24px rgba(139, 92, 246, 0.1);
+  border-color: rgba(124, 58, 237, 0.2);
+  box-shadow: 0 8px 24px rgba(124, 58, 237, 0.12);
   transform: translateY(-2px);
   z-index: 10;
 }
@@ -170,6 +172,7 @@
   margin: 0 0 1rem;
   font-size: 1.1rem;
   font-weight: 600;
+  color: #1e1b4b;
 }
 
 /* Buttons */
@@ -188,7 +191,7 @@
 
 .btn:hover {
   transform: translateY(-2px) scale(1.05);
-  filter: brightness(1.15);
+  filter: brightness(1.1);
 }
 
 .btn:active {
@@ -206,18 +209,18 @@
 }
 
 .btn.success {
-  background: linear-gradient(135deg, var(--success), #16a34a);
-  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.25);
+  background: linear-gradient(135deg, var(--success), #15803d);
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.25);
 }
 
 .btn.primary {
   background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.25);
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.25);
 }
 
 .btn.neutral {
-  background: linear-gradient(135deg, var(--gray-600), var(--gray-700));
-  box-shadow: 0 4px 12px rgba(75, 85, 99, 0.25);
+  background: linear-gradient(135deg, #6b7280, #4b5563);
+  box-shadow: 0 4px 12px rgba(107, 114, 128, 0.2);
 }
 
 /* Tooltip */
@@ -234,14 +237,15 @@
   left: 50%;
   transform: translateX(-50%) translateY(4px);
   white-space: nowrap;
-  background: var(--gray-800);
-  color: #e2e8f0;
+  background: rgba(255, 255, 255, 0.92);
+  color: #1e1b4b;
   font-size: 0.78rem;
   font-weight: 500;
   padding: 0.45rem 0.85rem;
   border-radius: 8px;
-  border: 1px solid rgba(139, 92, 246, 0.25);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(124, 58, 237, 0.2);
+  box-shadow: 0 8px 24px rgba(100, 100, 150, 0.15);
+  backdrop-filter: blur(12px);
   pointer-events: none;
   transition: opacity 0.2s ease, transform 0.2s ease;
   z-index: 100;
@@ -254,7 +258,7 @@
   left: 50%;
   transform: translateX(-50%);
   border: 6px solid transparent;
-  border-top-color: var(--gray-800);
+  border-top-color: rgba(255, 255, 255, 0.92);
 }
 
 .tooltip-wrap:hover .tooltip {
