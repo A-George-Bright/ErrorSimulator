@@ -24,21 +24,37 @@ export class SimulateComponent implements OnInit, OnDestroy {
 
   isLoading = (action: string) => this.loading().has(action);
 
+  refreshCpuStats(res: any) {
+    this.cpu.set(Number(res?.systemCpu ?? 0));
+  }
+
+  refreshMemoryStats(res: any) {
+    this.ram.set(Number(res?.usedMemoryMb ?? 0));
+    this.totalRam.set(Number(res?.totalMemoryMb ?? 0));
+    this.memoryPercent.set(Number(res?.memoryLoadPercent ?? 0));
+  }
+
+  refreshLiveStatus(connected: boolean) {
+    if (connected) {
+      this.connectionStatus.set('connected');
+      this.statusMessage.set('Live Stats Streaming');
+    } else {
+      this.connectionStatus.set('demo');
+      this.statusMessage.set('Backend Offline - Demo Mode');
+    }
+  }
+
   refreshStats() {
     this.sim.stats().subscribe({
       next: (res: any) => {
-        this.cpu.set(Number(res?.systemCpu ?? 0));
-        this.ram.set(Number(res?.usedMemoryMb ?? 0));
-        this.totalRam.set(Number(res?.totalMemoryMb ?? 0));
-        this.memoryPercent.set(Number(res?.memoryLoadPercent ?? 0));
-        this.connectionStatus.set('connected');
-        this.statusMessage.set('Live Stats Streaming');
+        this.refreshCpuStats(res);
+        this.refreshMemoryStats(res);
+        this.refreshLiveStatus(true);
       },
       error: () => {
         this.cpu.set(0);
         this.ram.set(0);
-        this.connectionStatus.set('demo');
-        this.statusMessage.set('Backend Offline - Demo Mode');
+        this.refreshLiveStatus(false);
       }
     });
   }

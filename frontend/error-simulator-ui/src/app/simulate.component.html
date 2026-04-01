@@ -1,74 +1,95 @@
-<!-- 📊 STATS (TOP) -->
+<!-- 📊 STATS SECTION -->
+<h2 class="section-title">Stats</h2>
 <div class="stats-container">
 
+  <!-- CPU Stats Box -->
   <div class="stat-card">
-    <h3>CPU</h3>
+    <div class="stat-icon">🔥</div>
+    <h3>CPU Usage</h3>
     <p class="stat-value">{{ cpu() | number:'1.0-1' }}%</p>
+    <div class="stat-bar">
+      <div class="stat-bar-fill cpu-bar" [style.width.%]="cpu()"></div>
+    </div>
+    <p class="stat-sub">System processor load</p>
   </div>
 
+  <!-- Memory Stats Box -->
   <div class="stat-card">
-    <h3>Memory</h3>
+    <div class="stat-icon">🧠</div>
+    <h3>Memory Usage</h3>
     <p class="stat-value">{{ ram() }} / {{ totalRam() }} MB</p>
+    <div class="stat-bar">
+      <div class="stat-bar-fill memory-bar" [style.width.%]="memoryPercent()"></div>
+    </div>
     <p class="stat-sub">{{ memoryPercent() }}% used</p>
   </div>
 
+  <!-- Live Status Box -->
   <div class="stat-card">
-    <h3>Status</h3>
-<p [class.connected]="connectionStatus() === 'connected' || connectionStatus() === 'demo'"
-       [class.disconnected]="connectionStatus() === 'disconnected'"
-       [class.demo]="connectionStatus() === 'demo'">
-      {{ statusMessage() }}
-    </p>
+    <div class="stat-icon">📡</div>
+    <h3>Live Status</h3>
+    <div class="status-indicator">
+      <span class="status-dot"
+        [class.dot-connected]="connectionStatus() === 'connected'"
+        [class.dot-disconnected]="connectionStatus() === 'disconnected'"
+        [class.dot-demo]="connectionStatus() === 'demo'"></span>
+      <p [class.connected]="connectionStatus() === 'connected'"
+         [class.disconnected]="connectionStatus() === 'disconnected'"
+         [class.demo]="connectionStatus() === 'demo'">
+        {{ statusMessage() }}
+      </p>
+    </div>
+    <p class="stat-sub">{{ connectionStatus() === 'connected' ? 'Refreshing every 1s' : 'Waiting for backend' }}</p>
   </div>
 
 </div>
 
-
-<!-- 🎛️ ACTION PANELS -->
+<!-- 🎛️ FUNCTIONS SECTION -->
+<h2 class="section-title">Functions</h2>
 <div class="grid">
 
   <!-- CPU -->
   <div class="card">
     <h3>🔥 CPU</h3>
-    <button class="btn red" (click)="run('cpu')">Start</button>
-    <button class="btn yellow" (click)="run('cpuReduce')">Reduce</button>
-    <button class="btn green" (click)="run('cpuStop')">Stop</button>
+    <button class="btn danger" (click)="run('cpu')">Start</button>
+    <button class="btn warning" (click)="run('cpuReduce')">Reduce</button>
+    <button class="btn success" (click)="run('cpuStop')">Stop</button>
   </div>
 
   <!-- MEMORY -->
   <div class="card">
     <h3>🧠 Memory</h3>
-    <button class="btn blue" (click)="run('memoryStart')">Allocate</button>
-    <button class="btn green" (click)="run('memoryStop')">Release</button>
+    <button class="btn primary" (click)="run('memoryStart')">Allocate</button>
+    <button class="btn success" (click)="run('memoryStop')">Release</button>
   </div>
 
   <!-- SLOW -->
   <div class="card">
     <h3>🐢 Latency</h3>
-    <button class="btn yellow" (click)="run('slow')">Fixed</button>
-    <button class="btn yellow" (click)="run('slowRandom')">Random</button>
+    <button class="btn warning" (click)="run('slow')">Fixed</button>
+    <button class="btn warning" (click)="run('slowRandom')">Random</button>
   </div>
 
   <!-- DATABASE -->
   <div class="card">
     <h3>💾 Database</h3>
-    <button class="btn red" (click)="run('dbDown')">Down</button>
-    <button class="btn yellow" (click)="run('dbTimeout')">Timeout</button>
-    <button class="btn blue" (click)="run('dbIntermittent')">Intermittent</button>
-    <button class="btn green" (click)="run('dbReset')">Reset</button>
+    <button class="btn danger" (click)="run('dbDown')">Down</button>
+    <button class="btn warning" (click)="run('dbTimeout')">Timeout</button>
+    <button class="btn primary" (click)="run('dbIntermittent')">Intermittent</button>
+    <button class="btn success" (click)="run('dbReset')">Reset</button>
   </div>
 
   <!-- ERRORS -->
   <div class="card">
     <h3>💥 Errors</h3>
-    <button class="btn red" (click)="run('exception')">Exception</button>
-    <button class="btn red" (click)="run('stack')">Stack</button>
+    <button class="btn danger" (click)="run('exception')">Exception</button>
+    <button class="btn danger" (click)="run('stack')">Stack</button>
   </div>
 
   <!-- GLOBAL -->
   <div class="card">
     <h3>⚙️ Control</h3>
-    <button class="btn gray" (click)="run('stopAll')">Stop All</button>
+    <button class="btn neutral" (click)="run('stopAll')">Stop All</button>
   </div>
 
 </div>
