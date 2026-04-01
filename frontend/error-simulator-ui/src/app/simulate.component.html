@@ -3,12 +3,13 @@
 
   <div class="stat-card">
     <h3>CPU</h3>
-    <p class="stat-value">{{ cpu() }}%</p>
+    <p class="stat-value">{{ cpu() | number:'1.0-1' }}%</p>
   </div>
 
   <div class="stat-card">
     <h3>Memory</h3>
-    <p class="stat-value">{{ ram() }} MB</p>
+    <p class="stat-value">{{ ram() }} / {{ totalRam() }} MB</p>
+    <p class="stat-sub">{{ memoryPercent() }}% used</p>
   </div>
 
   <div class="stat-card">

@@ -1,6 +1,7 @@
 ﻿namespace ErrorSimulatorAPI.Services
 {
     using System.Diagnostics;
+    using System.Runtime.InteropServices;
     using System.Threading;
 
     public enum DbFailureMode
@@ -20,13 +21,59 @@
         private readonly object _cpuLock = new();
         private int _cpuLoadPercent = 0;
 
+        // System-wide CPU via PerformanceCounter (matches Task Manager)
+        private readonly PerformanceCounter? _cpuCounter;
+        private double _lastCpuReading = 0;
+        private readonly Timer _cpuTimer;
+
         public DbFailureMode CurrentDbFailure { get; private set; } = DbFailureMode.None;
         public bool IsSlowRunning { get; private set; }
         public bool IsCpuRunning { get; private set; }
 
+        // Native call for system memory info (matches Task Manager)
+        [StructLayout(LayoutKind.Sequential)]
+        private struct MEMORYSTATUSEX
+        {
+            public uint dwLength;
+            public uint dwMemoryLoad;
+            public ulong ullTotalPhys;
+            public ulong ullAvailPhys;
+            public ulong ullTotalPageFile;
+            public ulong ullAvailPageFile;
+            public ulong ullTotalVirtual;
+            public ulong ullAvailVirtual;
+            public ulong ullAvailExtendedVirtual;
+        }
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool GlobalMemoryStatusEx(ref MEMORYSTATUSEX lpBuffer);
+
         public SimulationService(IConfiguration config, ILogger<SimulationService> logger)
         {
             _logger = logger;
+
+            try
+            {
+                _cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
+                // First call always returns 0, so prime it
+                _cpuCounter.NextValue();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning("Could not initialize CPU PerformanceCounter: {Message}", ex.Message);
+            }
+
+            // Update CPU reading every second in background (non-blocking)
+            _cpuTimer = new Timer(_ =>
+            {
+                try
+                {
+                    if (_cpuCounter != null)
+                        _lastCpuReading = _cpuCounter.NextValue();
+                }
+                catch { }
+            }, null, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1));
         }
 
         // 🔥 CPU START
@@ -191,39 +238,35 @@
             _logger.LogInformation("SIM DB RESET | Connection restored");
         }
 
-        // 📊 STATS
+        // 📊 STATS (system-wide, matches Task Manager)
         public object GetSystemStats()
         {
-            using var proc = Process.GetCurrentProcess();
+            double systemCpu = Math.Round(_lastCpuReading, 1);
 
-            long workingSet = proc.WorkingSet64;
-
-            double processCpuPercent = 0;
+            // System memory via GlobalMemoryStatusEx (same source as Task Manager)
+            double totalMemoryMb = 0;
+            double usedMemoryMb = 0;
+            uint memoryLoadPercent = 0;
 
             try
             {
-                var startCpu = proc.TotalProcessorTime;
-                var start = DateTime.UtcNow;
-
-                Thread.Sleep(500);
-
-                using var proc2 = Process.GetCurrentProcess();
-                var endCpu = proc2.TotalProcessorTime;
-
-                var elapsed = (DateTime.UtcNow - start).TotalMilliseconds;
-
-                if (elapsed > 0)
+                var memStatus = new MEMORYSTATUSEX { dwLength = (uint)Marshal.SizeOf<MEMORYSTATUSEX>() };
+                if (GlobalMemoryStatusEx(ref memStatus))
                 {
-                    processCpuPercent = (endCpu - startCpu).TotalMilliseconds
-                        / elapsed / Environment.ProcessorCount * 100.0;
+                    totalMemoryMb = Math.Round(memStatus.ullTotalPhys / (1024.0 * 1024.0), 0);
+                    double availMb = memStatus.ullAvailPhys / (1024.0 * 1024.0);
+                    usedMemoryMb = Math.Round(totalMemoryMb - availMb, 0);
+                    memoryLoadPercent = memStatus.dwMemoryLoad;
                 }
             }
             catch { }
 
             return new
             {
-                processCpuPercent = Math.Round(processCpuPercent, 2),
-                ramAvailableMb = Math.Round(workingSet / (1024.0 * 1024.0), 2)
+                systemCpu,
+                totalMemoryMb,
+                usedMemoryMb,
+                memoryLoadPercent
             };
         }
     }

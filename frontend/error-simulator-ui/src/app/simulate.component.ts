@@ -15,6 +15,8 @@ export class SimulateComponent implements OnInit, OnDestroy {
 
   cpu = signal(0);
   ram = signal(0);
+  totalRam = signal(0);
+  memoryPercent = signal(0);
   connectionStatus = signal<'connected' | 'disconnected' | 'demo'>('disconnected');
   statusMessage = signal('Connecting...');
   loading = signal(new Set<string>());
@@ -25,15 +27,16 @@ export class SimulateComponent implements OnInit, OnDestroy {
   refreshStats() {
     this.sim.stats().subscribe({
       next: (res: any) => {
-        this.cpu.set(Number(res?.systemCpu ?? res?.cpu ?? Math.round(Math.random() * 15 + 5)));
-        this.ram.set(Number(res?.ramAvailableMb ?? res?.ram ?? res?.ramAvailable ?? Math.round(Math.random() * 4500 + 4200)));
+        this.cpu.set(Number(res?.systemCpu ?? 0));
+        this.ram.set(Number(res?.usedMemoryMb ?? 0));
+        this.totalRam.set(Number(res?.totalMemoryMb ?? 0));
+        this.memoryPercent.set(Number(res?.memoryLoadPercent ?? 0));
         this.connectionStatus.set('connected');
         this.statusMessage.set('Live Stats Streaming');
       },
       error: () => {
-        // Fallback demo stats
-        this.cpu.set(Math.round(Math.random() * 15 + 5));
-        this.ram.set(Math.round(Math.random() * 4500 + 4200));
+        this.cpu.set(0);
+        this.ram.set(0);
         this.connectionStatus.set('demo');
         this.statusMessage.set('Backend Offline - Demo Mode');
       }
