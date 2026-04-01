@@ -1,1 +1,119 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --primary: #8b5cf6;
+  --primary-dark: #7c3aed;
+  --danger: #ef4444;
+  --warning: #f59e0b;
+  --success: #22c55e;
+  --accent: #ec4899;
+  --gray-900: #111827;
+  --gray-800: #1f2937;
+  --gray-700: #374151;
+  --gray-600: #4b5563;
+  --border: rgba(255,255,255,0.08);
+  --glass: rgba(255,255,255,0.05);
+  --shadow: rgba(0,0,0,0.4);
+  --text-muted: #9ca3af;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  height: 100%;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+
+  background: linear-gradient(135deg, var(--gray-900) 0%, var(--gray-800) 50%, #111827 100%);
+  color: #f9fafb;
+}
+
+/* Button & Interactive Reset */
+button, [role="button"] {
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+.btn:focus-visible,
+.tab-btn:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Responsive Grids */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .stats-container {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .row {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+}
+
+/* Card & Container Consistency */
+.card, .stat-card {
+  position: relative;
+}
+
+@media (max-width: 480px) {
+  .app-tabs-container {
+    padding: 1rem;
+  }
+  
+  .title {
+    font-size: 2rem !important;
+  }
+}
+
+/* Loading State */
+.btn:disabled,
+.btn[aria-busy="true"] {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.btn:disabled::after {
+  content: '';
+  width: 16px;
+  height: 16px;
+  border: 2px solid transparent;
+  border-top: 2px solid currentColor;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-left: 8px;
+  display: inline-block;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Status Animations */
+.connected {
+  animation: pulse-green 2s infinite;
+}
+
+@keyframes pulse-green {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}

@@ -1,0 +1,24 @@
+<div class="app-tabs-container">
+  <header class="header">
+    <div class="header-content">
+      <h1 class="title">
+        <span class="logo">⚡</span>
+        Error Simulator
+      </h1>
+      <p class="subtitle">Simulate system failures & API resilience</p>
+    </div>
+  </header>
+  
+  <nav class="tabs-nav">
+    <button routerLink="/simulate" routerLinkActive="active" class="tab-btn">
+      <span>⚡</span> Simulate
+    </button>
+    <button routerLink="/transfer" routerLinkActive="active" class="tab-btn">
+      <span>💳</span> Transfer
+    </button>
+  </nav>
+  
+  <main class="tabs-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

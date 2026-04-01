@@ -1,0 +1,180 @@
+[33m❯[39m Building...
+
+  polyfills.server.mjs  228.2kb
+
+Done in 180ms
+▲ [WARNING] NG8113: RouterOutlet is not used within the template of TransferComponent [plugin angular-compiler]
+
+    src/app/transfer.component.ts:10:39:
+      10 │   imports: [CommonModule, FormsModule, RouterOutlet],
+         ╵                                        ~~~~~~~~~~~~
+
+X [ERROR] TS2339: Property 'transactionId' does not exist on type 'WritableSignal<TransferRequest>'. [plugin angular-compiler]
+
+    src/app/transfer.component.ts:21:48:
+      21 │ ...xt" [(ngModel)]="request.transactionId" name="txnId" required p...
+         ╵                             ~~~~~~~~~~~~~
+
+X [ERROR] TS2339: Property 'transactionId' does not exist on type 'WritableSignal<TransferRequest>'. [plugin angular-compiler]
+
+    src/app/transfer.component.ts:21:48:
+      21 │ ...xt" [(ngModel)]="request.transactionId" name="txnId" required p...
+         ╵                             ~~~~~~~~~~~~~
+
+X [ERROR] TS2339: Property 'fromAccountId' does not exist on type 'WritableSignal<TransferRequest>'. [plugin angular-compiler]
+
+    src/app/transfer.component.ts:26:50:
+      26 │ ...er" [(ngModel)]="request.fromAccountId" name="fromId" required ...
+         ╵                             ~~~~~~~~~~~~~
+
+X [ERROR] TS2339: Property 'fromAccountId' does not exist on type 'WritableSignal<TransferRequest>'. [plugin angular-compiler]
+
+    src/app/transfer.component.ts:26:50:
+      26 │ ...er" [(ngModel)]="request.fromAccountId" name="fromId" required ...
+         ╵                             ~~~~~~~~~~~~~
+
+X [ERROR] TS2339: Property 'toAccountId' does not exist on type 'WritableSignal<TransferRequest>'. [plugin angular-compiler]
+
+    src/app/transfer.component.ts:31:50:
+      31 │ ...ber" [(ngModel)]="request.toAccountId" name="toId" required min...
+         ╵                              ~~~~~~~~~~~
+
+X [ERROR] TS2339: Property 'toAccountId' does not exist on type 'WritableSignal<TransferRequest>'. [plugin angular-compiler]
+
+    src/app/transfer.component.ts:31:50:
+      31 │ ...ber" [(ngModel)]="request.toAccountId" name="toId" required min...
+         ╵                              ~~~~~~~~~~~
+
+X [ERROR] TS2339: Property 'amount' does not exist on type 'WritableSignal<TransferRequest>'. [plugin angular-compiler]
+
+    src/app/transfer.component.ts:36:50:
+      36 │ ...number" [(ngModel)]="request.amount" name="amount" required min...
+         ╵                                 ~~~~~~
+
+X [ERROR] TS2339: Property 'amount' does not exist on type 'WritableSignal<TransferRequest>'. [plugin angular-compiler]
+
+    src/app/transfer.component.ts:36:50:
+      36 │ ...number" [(ngModel)]="request.amount" name="amount" required min...
+         ╵                                 ~~~~~~
+
+● [DEBUG] This call to "require" will not be bundled because the argument is not a string literal [unsupported-require-call]
+
+    node_modules/express/lib/view.js:72:13:
+      72 │     var fn = require(mod).__express;
+         ╵              ~~~~~~~
+
+1 warning and 8 errors
+● [DEBUG] Resolving import "supports-color" in directory "C:\\Users\\AllbinKGeorge\\Music\\ErrorSimulator\\frontend\\error-simulator-ui\\node_modules\\debug\\src" of type "require-call"
+
+  Checking for package alias matches
+    Failed to find any package alias matches
+  Checking "supports-color" against the external pattern "*/main.server.mjs"
+  Read 4 entries for directory "C:\\Users\\AllbinKGeorge\\Music\\ErrorSimulator\\frontend\\error-simulator-ui\\node_modules\\debug\\src"
+  Searching for "supports-color" in "node_modules" directories starting from "C:\\Users\\AllbinKGeorge\\Music\\ErrorSimulator\\frontend\\error-simulator-ui\\node_modules\\debug\\src"
+    Parsed package name "supports-color" and package subpath "."
+    Checking for a package in the directory "C:\\Users\\AllbinKGeorge\\Music\\ErrorSimulator\\frontend\\error-simulator-ui\\node_modules\\supports-color"
+    Read 336 entries for directory "C:\\Users\\AllbinKGeorge\\Music\\ErrorSimulator\\frontend\\error-simulator-ui\\node_modules"
+    Failed to read directory "C:\\Users\\AllbinKGeorge\\Music\\ErrorSimulator\\frontend\\error-simulator-ui\\node_modules\\supports-color": open C:\Users\AllbinKGeorge\Music\ErrorSimulator\frontend\error-simulator-ui\node_modules\supports-color: The system cannot find the file specified.
+    Failed to read directory "C:\\Users\\AllbinKGeorge\\Music\\ErrorSimulator\\frontend\\error-simulator-ui\\node_modules\\supports-color"
+    Attempting to load "C:\\Users\\AllbinKGeorge\\Music\\ErrorSimulator\\frontend\\error-simulator-ui\\node_modules\\supports-color" as a file
+      Checking for file "supports-color"
+      Checking for file "supports-color.mjs"
+      Checking for file "supports-color.js"
+      Checking for file "supports-color.cjs"
+      Checking for file "supports-color.ts"
+      Checking for file "supports-color.tsx"
+      Failed to find file "supports-color"
+    Attempting to load "C:\\Users\\AllbinKGeorge\\Music\\ErrorSimulator\\frontend\\error-simulator-ui\\node_modules\\supports-color" as a directory
+      Failed to read directory "C:\\Users\\AllbinKGeorge\\Music\\ErrorSimulator\\frontend\\error-simulator-ui\\node_modules\\supports-color"
+
+● [DEBUG] Importing "supports-color" was allowed even though it could not be resolved because dynamic import failures appear to be handled here: [ignored-dynamic-import]
+
+    node_modules/debug/src/node.js:28:32:
+      28 │   const supportsColor = require('supports-color');
+         ╵                                 ~~~~~~~~~~~~~~~~
+
+  The handler for dynamic import failures is here:
+
+    node_modules/debug/src/node.js:32:2:
+      32 │ } catch (error) {
+         ╵   ~~~~~
+
+
+  main.server.mjs     746.3kb
+  chunk-N3SI5I4Q.mjs   11.8kb
+  chunk-T55IDOPT.mjs    976b 
+
+Done in 2015ms
+
+  server.mjs          791.4kb
+  chunk-BP7AI3FB.mjs   11.9kb
+  chunk-BBJ2OP3G.mjs    1.3kb
+
+Done in 2029ms
+[32m✔[39m Building...
+[35mPrerendered 0 static routes.[39m
+Application bundle generation failed. [2.074 seconds] - 2026-03-31T10:17:01.021Z
+
+[1m[33m[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8113: RouterOutlet is not used within the template of TransferComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/transfer.component.ts:10:39:
+[37m      10 │   imports: [CommonModule, FormsModule, [32mRouterOutlet[37m],
+         ╵                                        [32m~~~~~~~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'transactionId' does not exist on type 'WritableSignal<TransferRequest>'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/transfer.component.ts:21:48:
+[37m      21 │ ...xt" [(ngModel)]="request.[32mtransactionId[37m" name="txnId" required p...
+         ╵                             [32m~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'transactionId' does not exist on type 'WritableSignal<TransferRequest>'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/transfer.component.ts:21:48:
+[37m      21 │ ...xt" [(ngModel)]="request.[32mtransactionId[37m" name="txnId" required p...
+         ╵                             [32m~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'fromAccountId' does not exist on type 'WritableSignal<TransferRequest>'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/transfer.component.ts:26:50:
+[37m      26 │ ...er" [(ngModel)]="request.[32mfromAccountId[37m" name="fromId" required ...
+         ╵                             [32m~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'fromAccountId' does not exist on type 'WritableSignal<TransferRequest>'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/transfer.component.ts:26:50:
+[37m      26 │ ...er" [(ngModel)]="request.[32mfromAccountId[37m" name="fromId" required ...
+         ╵                             [32m~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'toAccountId' does not exist on type 'WritableSignal<TransferRequest>'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/transfer.component.ts:31:50:
+[37m      31 │ ...ber" [(ngModel)]="request.[32mtoAccountId[37m" name="toId" required min...
+         ╵                              [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'toAccountId' does not exist on type 'WritableSignal<TransferRequest>'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/transfer.component.ts:31:50:
+[37m      31 │ ...ber" [(ngModel)]="request.[32mtoAccountId[37m" name="toId" required min...
+         ╵                              [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'amount' does not exist on type 'WritableSignal<TransferRequest>'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/transfer.component.ts:36:50:
+[37m      36 │ ...number" [(ngModel)]="request.[32mamount[37m" name="amount" required min...
+         ╵                                 [32m~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'amount' does not exist on type 'WritableSignal<TransferRequest>'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/transfer.component.ts:36:50:
+[37m      36 │ ...number" [(ngModel)]="request.[32mamount[37m" name="amount" required min...
+         ╵                                 [32m~~~~~~[0m
+
+[39m[22m

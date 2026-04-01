@@ -1,0 +1,63 @@
+<div class="transfer-container">
+
+  <div class="card">
+    <h2>💳 Transfer Simulator</h2>
+
+    <form (ngSubmit)="simulateTransfer()" #transferForm="ngForm">
+
+      <div class="row">
+        <div class="field">
+          <label>Transaction ID</label>
+          <input type="text"
+            [ngModel]="request().transactionId"
+            (ngModelChange)="request.set({...request(), transactionId: $event})"
+            name="txnId"
+            required>
+        </div>
+
+        <div class="field">
+          <label>Amount</label>
+          <input type="number"
+            [ngModel]="request().amount"
+            (ngModelChange)="request.set({...request(), amount: $event})"
+            name="amount"
+            required>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label>From</label>
+          <input type="number"
+            [ngModel]="request().fromAccountId"
+            (ngModelChange)="request.set({...request(), fromAccountId: $event})"
+            name="fromId">
+        </div>
+
+        <div class="field">
+          <label>To</label>
+          <input type="number"
+            [ngModel]="request().toAccountId"
+            (ngModelChange)="request.set({...request(), toAccountId: $event})"
+            name="toId">
+        </div>
+      </div>
+
+      <button 
+        type="submit"
+        class="btn"
+        [disabled]="loading() || transferForm.invalid">
+
+        {{ loading() ? 'Processing...' : 'Transfer Money' }}
+      </button>
+
+    </form>
+  </div>
+
+  <div *ngIf="response()" class="response" [class]="response()?.status?.toLowerCase()">
+    <h3>{{ response()?.status }}</h3>
+    <p>{{ response()?.message }}</p>
+    <p *ngIf="response()?.balance">Balance: {{ response()?.balance }}</p>
+  </div>
+
+</div>

@@ -52,9 +52,33 @@ export class SimulateService {
     return this.tryPost('slow');
   }
 
-  db() {
-    return this.tryPost('db');
-  }
+  cpuReduce() {
+  return this.tryPost('cpu/reduce');
+}
+
+slowRandom() {
+  return this.tryUrl('slow-random');
+}
+
+dbDown() {
+  return this.tryPost('db/down');
+}
+
+dbTimeout() {
+  return this.tryPost('db/timeout');
+}
+
+dbIntermittent() {
+  return this.tryPost('db/intermittent');
+}
+
+dbReset() {
+  return this.tryPost('db/reset');
+}
+
+stack() {
+  return this.tryUrl('stack');
+}
 
   exception() {
     return this.tryPost('exception');
