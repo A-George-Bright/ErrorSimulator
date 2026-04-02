@@ -30,6 +30,9 @@
         public bool IsSlowRunning { get; private set; }
         public bool IsCpuRunning { get; private set; }
 
+        // Auto-recovery timer: DB Down resets automatically after 30 seconds
+        private Timer? _dbRecoveryTimer;
+
         // Native call for system memory info (matches Task Manager)
         [StructLayout(LayoutKind.Sequential)]
         private struct MEMORYSTATUSEX
@@ -187,6 +190,9 @@
         {
             StopCpu();
 
+            _dbRecoveryTimer?.Dispose();
+            _dbRecoveryTimer = null;
+
             CurrentDbFailure = DbFailureMode.None;
             IsSlowRunning = false;
             IsCpuRunning = false;
@@ -210,11 +216,24 @@
             _logger.LogInformation("SIM SLOW END");
         }
 
-        // 💥 DB HARD DOWN
+        // 💥 DB HARD DOWN — auto-recovers after 30 seconds
         public void DbDown()
         {
             CurrentDbFailure = DbFailureMode.HardDown;
-            _logger.LogError("SIM DB HARD DOWN | Database unreachable");
+            _logger.LogError("SIM DB HARD DOWN | Database unreachable — will auto-recover in 30s");
+
+            // Cancel any previous recovery timer
+            _dbRecoveryTimer?.Dispose();
+            _dbRecoveryTimer = new Timer(_ =>
+            {
+                if (CurrentDbFailure == DbFailureMode.HardDown)
+                {
+                    CurrentDbFailure = DbFailureMode.None;
+                    _logger.LogInformation("SIM DB AUTO-RECOVERED | Connection restored");
+                }
+                _dbRecoveryTimer?.Dispose();
+                _dbRecoveryTimer = null;
+            }, null, TimeSpan.FromSeconds(30), Timeout.InfiniteTimeSpan);
         }
 
         // ⏱️ DB TIMEOUT
@@ -234,6 +253,8 @@
         // 🔁 DB RESET
         public void ResetDb()
         {
+            _dbRecoveryTimer?.Dispose();
+            _dbRecoveryTimer = null;
             CurrentDbFailure = DbFailureMode.None;
             _logger.LogInformation("SIM DB RESET | Connection restored");
         }
