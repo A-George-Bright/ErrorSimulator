@@ -1,5 +1,7 @@
-﻿using ErrorSimulatorAPI.DTOs;
+using System.Data.Common;
+using ErrorSimulatorAPI.DTOs;
 using ErrorSimulatorAPI.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ErrorSimulatorAPI.Controllers
@@ -24,26 +26,88 @@ namespace ErrorSimulatorAPI.Controllers
                 "API TRANSFER REQUEST: {From} → {To} | Amount: {Amount}",
                 request.FromAccountNumber, request.ToAccountNumber, request.Amount);
 
-            var result = await _service.TransferAsync(request);
-
-            // 🔁 Handle responses properly
-            switch (result.Status)
+            try
             {
-                case "SUCCESS":
-                    return Ok(result);
+                var result = await _service.TransferAsync(request);
 
-                case "DUPLICATE":
-                    _logger.LogWarning("API DUPLICATE: {From} → {To}", request.FromAccountNumber, request.ToAccountNumber);
-                    return Conflict(result); // 409
+                return result.Status switch
+                {
+                    "SUCCESS"   => Ok(result),
+                    "DUPLICATE" => Conflict(result),           // 409
+                    _           => StatusCode(500, result)
+                };
+            }
+            // ── Real timeout from CancellationTokenSource (10 s) or DB delay ──
+            catch (OperationCanceledException ex)
+            {
+                _logger.LogWarning("API TIMEOUT: {From} → {To} | {Msg}",
+                    request.FromAccountNumber, request.ToAccountNumber, ex.Message);
 
-                case "TIMEOUT":
-                    _logger.LogWarning("API TIMEOUT: {From} → {To}", request.FromAccountNumber, request.ToAccountNumber);
-                    return StatusCode(408, result); // 408
+                return StatusCode(408, new TransferResponse
+                {
+                    Success = false,
+                    Status = "TIMEOUT",
+                    Message = "Transaction failed due to timeout. Please try again.",
+                    FailureReason = "Query execution timeout",
+                    Timestamp = DateTime.UtcNow
+                });
+            }
+            // ── Real EF Core / ADO.NET DB failure (connection closed, deadlock …) ──
+            catch (DbException ex)
+            {
+                _logger.LogError("API DB ERROR: {From} → {To} | {Msg}",
+                    request.FromAccountNumber, request.ToAccountNumber, ex.Message);
 
-                case "FAILED":
-                default:
-                    _logger.LogError("API FAILED: {From} → {To} | Reason: {Reason}", request.FromAccountNumber, request.ToAccountNumber, result.FailureReason);
-                    return StatusCode(500, result);
+                return StatusCode(500, new TransferResponse
+                {
+                    Success = false,
+                    Status = "FAILED",
+                    Message = "Database unavailable. Please try after some time.",
+                    FailureReason = ex.Message,
+                    Timestamp = DateTime.UtcNow
+                });
+            }
+            catch (DbUpdateException ex)
+            {
+                _logger.LogError("API DB UPDATE ERROR: {From} → {To} | {Msg}",
+                    request.FromAccountNumber, request.ToAccountNumber, ex.Message);
+
+                return StatusCode(500, new TransferResponse
+                {
+                    Success = false,
+                    Status = "FAILED",
+                    Message = "Database unavailable. Please try after some time.",
+                    FailureReason = ex.InnerException?.Message ?? ex.Message,
+                    Timestamp = DateTime.UtcNow
+                });
+            }
+            // ── Validation errors (bad account, inactive, insufficient balance) ─
+            catch (ArgumentException ex)
+            {
+                _logger.LogWarning("API VALIDATION: {From} → {To} | {Msg}",
+                    request.FromAccountNumber, request.ToAccountNumber, ex.Message);
+
+                return BadRequest(new TransferResponse
+                {
+                    Success = false,
+                    Status = "FAILED",
+                    Message = ex.Message,
+                    Timestamp = DateTime.UtcNow
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("API UNEXPECTED: {From} → {To} | {Msg}",
+                    request.FromAccountNumber, request.ToAccountNumber, ex.Message);
+
+                return StatusCode(500, new TransferResponse
+                {
+                    Success = false,
+                    Status = "FAILED",
+                    Message = "Transaction failed. Please try again.",
+                    FailureReason = ex.Message,
+                    Timestamp = DateTime.UtcNow
+                });
             }
         }
     }

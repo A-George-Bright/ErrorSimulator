@@ -33,7 +33,6 @@ export class TransferComponent {
 
     console.group('[Transfer] Outgoing request');
     console.log('Payload:', { ...req });
-    console.log('Endpoint: POST http://localhost:5000/api/transfer');
     console.groupEnd();
 
     this.transferService.transfer(req).subscribe({
@@ -49,7 +48,6 @@ export class TransferComponent {
       error: (err: HttpErrorResponse) => {
         console.group(`[Transfer] Error ← HTTP ${err.status}`);
         console.error('HttpErrorResponse:', err);
-        console.log('Body:', err.error);
         console.groupEnd();
 
         const res = this.normalizeError(err);
@@ -60,60 +58,58 @@ export class TransferComponent {
     });
   }
 
-  /** Converts any HttpErrorResponse into a well-typed TransferResponse. */
+  /** Converts any HttpErrorResponse into a TransferResponse.
+   *  Priority: use the structured body the backend sent — only fall back
+   *  to generic messages when the body is absent (network-level failure). */
   private normalizeError(err: HttpErrorResponse): TransferResponse {
     const body = err.error;
 
-    // Backend returned a structured TransferResponse body (409, 408, 500)
+    // Backend returned a structured TransferResponse (408, 409, 500, 400 …)
     if (body && typeof body === 'object' && typeof body.status === 'string') {
       return body as TransferResponse;
     }
 
-    // Map HTTP status codes to known statuses when the body isn't structured
-    let status: TransferResponse['status'] = 'FAILED';
-    let message = 'An unexpected error occurred — please try again';
-
+    // Pure network failure — no HTTP response at all
     if (err.status === 0) {
-      message = 'Network error — could not reach server. Is the backend running?';
-    } else if (err.status === 408) {
-      status = 'TIMEOUT';
-      message = 'Request timed out — please retry';
-    } else if (err.status === 409) {
-      status = 'DUPLICATE';
-      message = 'Duplicate transaction — already processed';
-    } else if (err.status >= 500) {
-      message = `Server error (${err.status}) — please try again`;
-    } else if (err.status >= 400) {
-      message = `Bad request (${err.status}) — check your input`;
+      return {
+        success: false,
+        status: 'FAILED',
+        message: 'Unable to connect to server. Please check your network.',
+        reference: '',
+        timestamp: new Date().toISOString()
+      };
     }
 
+    // Fallback for unexpected non-structured bodies
     return {
       success: false,
-      status,
-      message,
+      status: err.status === 408 ? 'TIMEOUT' : 'FAILED',
+      message: err.status === 408
+        ? 'Transaction failed due to timeout. Please try again.'
+        : 'Database unavailable. Please try after some time.',
       reference: '',
       failureReason: err.message,
       timestamp: new Date().toISOString()
     };
   }
 
+  /** All toast messages use res.message exactly as sent by the backend. */
   private notify(res: TransferResponse) {
     switch (res.status) {
       case 'SUCCESS':
         this.toast.success(`Transfer successful · ${res.reference}`);
         break;
       case 'DUPLICATE':
-        this.toast.warning(`Duplicate transaction — already processed`);
+        this.toast.warning(res.message);
         break;
       case 'TIMEOUT':
-        this.toast.warning(`Request timed out · ${res.failureReason ?? 'please retry'}`);
+        this.toast.error(res.message);
         break;
       case 'FAILED':
-        this.toast.error(`Transfer failed · ${res.failureReason ?? res.message}`);
+        this.toast.error(res.message);
         break;
       default:
-        this.toast.error(`Unknown error — ${res.message || 'please retry'}`);
-        console.warn('[Transfer] Unhandled status:', res.status, res);
+        this.toast.error(res.message || 'An unexpected error occurred. Please try again.');
     }
   }
 }

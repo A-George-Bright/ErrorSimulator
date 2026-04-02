@@ -16,6 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `__efmigrationshistory`
+--
+
+DROP TABLE IF EXISTS `__efmigrationshistory`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `__efmigrationshistory` (
+  `MigrationId` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `ProductVersion` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  PRIMARY KEY (`MigrationId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `__efmigrationshistory`
+--
+
+LOCK TABLES `__efmigrationshistory` WRITE;
+/*!40000 ALTER TABLE `__efmigrationshistory` DISABLE KEYS */;
+INSERT INTO `__efmigrationshistory` VALUES ('20260401093405_InitialCreate','8.0.25');
+/*!40000 ALTER TABLE `__efmigrationshistory` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `simulationlogs`
 --
 
@@ -40,6 +64,78 @@ LOCK TABLES `simulationlogs` WRITE;
 INSERT INTO `simulationlogs` VALUES (1,'StopAll','CPU and memory released','2026-03-26 17:10:50'),(2,'StopAll','CPU and memory released','2026-03-26 17:10:50'),(3,'StopAll','CPU and memory released','2026-03-26 17:10:50'),(4,'StopAll','CPU and memory released','2026-03-26 17:10:51'),(5,'StopAll','CPU and memory released','2026-03-26 17:10:51'),(6,'StopAll','CPU and memory released','2026-03-26 17:10:51'),(7,'StopAll','CPU and memory released','2026-03-26 17:10:51'),(8,'StopAll','CPU and memory released','2026-03-26 17:10:52'),(9,'StopAll','CPU and memory released','2026-03-26 17:11:16'),(10,'CPU','Started','2026-03-26 17:11:19'),(11,'CPU','Started','2026-03-26 17:11:21'),(12,'CPU','Started','2026-03-26 17:11:29'),(13,'CPU','Stopped','2026-03-26 17:11:35'),(14,'CPU','Started','2026-03-26 17:11:59'),(15,'CPU','Started','2026-03-26 17:12:01'),(16,'CPU','Started','2026-03-26 17:12:02'),(17,'StopAll','CPU and memory released','2026-03-26 17:12:14'),(18,'StopAll','CPU and memory released','2026-03-26 17:12:23'),(19,'StopAll','CPU and memory released','2026-03-26 17:12:23'),(20,'StopAll','CPU and memory released','2026-03-26 17:12:29'),(21,'StopAll','CPU and memory released','2026-03-26 17:12:29'),(22,'StopAll','CPU and memory released','2026-03-26 17:12:29'),(23,'StopAll','CPU and memory released','2026-03-26 17:12:30'),(24,'StopAll','CPU and memory released','2026-03-26 17:12:30'),(25,'StopAll','CPU and memory released','2026-03-26 17:12:30'),(26,'StopAll','CPU and memory released','2026-03-26 17:12:30'),(27,'CPU','Started','2026-03-26 17:13:58'),(28,'CPU','Started','2026-03-26 17:13:59'),(29,'CPU','Started','2026-03-26 17:14:01'),(30,'CPU','Started','2026-03-26 17:14:02'),(31,'CPU','Started','2026-03-26 17:14:04'),(32,'CPU','Started','2026-03-26 17:15:03'),(33,'CPU','Started','2026-03-26 17:15:05'),(34,'CPU','Started','2026-03-26 17:15:06'),(35,'CPU','Started','2026-03-26 17:15:09'),(36,'CPU','Stopped','2026-03-26 17:15:35'),(37,'StopAll','CPU and memory released','2026-03-26 17:15:39'),(38,'StopAll','CPU and memory released','2026-03-26 17:17:17'),(39,'StopAll','CPU and memory released','2026-03-26 17:17:18'),(40,'StopAll','CPU and memory released','2026-03-26 17:17:20'),(41,'StopAll','CPU and memory released','2026-03-26 17:17:20'),(42,'StopAll','CPU and memory released','2026-03-26 17:17:20'),(43,'StopAll','CPU and memory released','2026-03-26 17:17:20'),(44,'StopAll','CPU and memory released','2026-03-26 17:17:20'),(45,'StopAll','CPU and memory released','2026-03-26 17:17:20'),(46,'StopAll','CPU and memory released','2026-03-26 17:17:20'),(47,'StopAll','CPU and memory released','2026-03-26 17:17:20'),(48,'StopAll','CPU and memory released','2026-03-26 17:17:20'),(49,'StopAll','CPU and memory released','2026-03-26 17:18:33'),(50,'StopAll','CPU and memory released','2026-03-26 17:18:33'),(51,'StopAll','CPU and memory released','2026-03-26 17:18:34'),(52,'StopAll','CPU and memory released','2026-03-26 17:18:34'),(53,'StopAll','CPU and memory released','2026-03-26 17:18:34'),(54,'StopAll','CPU and memory released','2026-03-26 17:18:34'),(55,'StopAll','CPU and memory released','2026-03-26 17:18:34'),(56,'StopAll','CPU and memory released','2026-03-26 17:18:34'),(57,'StopAll','CPU and memory released','2026-03-26 17:18:35'),(58,'StopAll','CPU and memory released','2026-03-26 17:18:42'),(59,'StopAll','CPU and memory released','2026-03-26 17:18:42'),(60,'StopAll','CPU and memory released','2026-03-26 17:19:03'),(61,'StopAll','CPU and memory released','2026-03-26 17:19:04'),(62,'StopAll','CPU and memory released','2026-03-26 17:19:04'),(63,'StopAll','CPU and memory released','2026-03-26 17:19:04'),(64,'StopAll','CPU and memory released','2026-03-26 17:19:04'),(65,'StopAll','CPU and memory released','2026-03-26 17:19:04'),(66,'StopAll','CPU and memory released','2026-03-26 17:19:07'),(67,'StopAll','CPU and memory released','2026-03-26 17:19:07'),(68,'StopAll','CPU and memory released','2026-03-26 17:19:15'),(69,'StopAll','CPU and memory released','2026-03-26 17:19:15'),(70,'StopAll','CPU and memory released','2026-03-26 17:19:16'),(71,'StopAll','CPU and memory released','2026-03-26 17:19:16'),(72,'StopAll','CPU and memory released','2026-03-26 17:19:17'),(73,'StopAll','CPU and memory released','2026-03-26 17:19:17'),(74,'StopAll','CPU and memory released','2026-03-26 17:19:38'),(75,'StopAll','CPU and memory released','2026-03-26 17:19:38'),(76,'StopAll','CPU and memory released','2026-03-26 17:19:38'),(77,'StopAll','CPU and memory released','2026-03-26 17:19:38'),(78,'StopAll','CPU and memory released','2026-03-26 17:19:39'),(79,'StopAll','CPU and memory released','2026-03-26 17:19:39'),(80,'StopAll','CPU and memory released','2026-03-26 17:19:39'),(81,'Slow','Started','2026-03-26 17:31:32'),(82,'Slow','Started','2026-03-26 17:31:40'),(83,'Slow','Started','2026-03-26 17:31:42'),(84,'Slow','Completed','2026-03-26 17:31:47'),(85,'Slow','Completed','2026-03-26 17:31:55'),(86,'Slow','Completed','2026-03-26 17:31:57'),(87,'Slow','Started','2026-03-26 17:32:28'),(88,'Slow','Completed','2026-03-26 17:32:43'),(89,'Slow','Started','2026-03-26 17:32:43'),(90,'Slow','Completed','2026-03-26 17:32:58'),(91,'Slow','Started','2026-03-26 17:33:06'),(92,'Slow','Completed','2026-03-26 17:33:21'),(93,'Slow','Started','2026-03-26 17:33:37'),(94,'Slow','Completed','2026-03-26 17:33:52'),(95,'CPU','Started','2026-03-26 20:53:19'),(96,'CPU','Started','2026-03-26 20:53:31'),(97,'CPU','Started','2026-03-26 20:53:40'),(98,'CPU','Started','2026-03-26 20:53:43'),(99,'CPU','Started','2026-03-26 20:53:54'),(100,'CPU','Started','2026-03-26 20:53:56'),(101,'CPU','Started','2026-03-26 20:53:58'),(102,'CPU','Started','2026-03-26 20:54:06'),(103,'CPU','Started','2026-03-26 20:54:16'),(104,'CPU','Started','2026-03-26 20:54:19'),(105,'CPU','Started','2026-03-26 20:54:33'),(106,'CPU','Started','2026-03-26 20:54:36'),(107,'CPU','Started','2026-03-26 20:54:37'),(108,'CPU','Started','2026-03-26 20:54:38'),(109,'CPU','Started','2026-03-26 20:54:38'),(110,'CPU','Started','2026-03-26 20:54:38'),(111,'CPU','Started','2026-03-26 20:54:40'),(112,'CPU','Started','2026-03-26 20:54:47'),(113,'CPU','Started','2026-03-26 20:54:47'),(114,'CPU','Started','2026-03-26 20:54:47'),(115,'CPU','Started','2026-03-26 20:54:52'),(116,'CPU','Started','2026-03-26 20:55:08'),(117,'CPU','Started','2026-03-26 20:55:10'),(118,'CPU','Started','2026-03-26 20:55:16'),(119,'CPU','Started','2026-03-26 20:55:19'),(120,'CPU','Started','2026-03-26 20:55:19'),(121,'CPU','Stopped','2026-03-26 20:55:57'),(122,'CPU','Stopped','2026-03-26 20:55:57'),(123,'CPU','Stopped','2026-03-26 20:55:58'),(124,'CPU','Stopped','2026-03-26 20:55:58'),(125,'CPU','Stopped','2026-03-26 20:55:58'),(126,'CPU','Stopped','2026-03-26 20:55:58'),(127,'CPU','Stopped','2026-03-26 20:55:58'),(128,'StopAll','CPU and memory released','2026-03-26 20:56:24'),(129,'StopAll','CPU and memory released','2026-03-26 20:56:30'),(130,'StopAll','CPU and memory released','2026-03-26 20:56:33'),(131,'StopAll','CPU and memory released','2026-03-26 20:56:37'),(132,'CPU','Stopped','2026-03-26 20:56:43'),(133,'CPU','Stopped','2026-03-26 20:56:46'),(134,'CPU','Stopped','2026-03-26 20:56:48'),(135,'StopAll','CPU and memory released','2026-03-26 20:56:49'),(136,'StopAll','CPU and memory released','2026-03-26 20:56:49'),(137,'StopAll','CPU and memory released','2026-03-26 20:56:49'),(138,'StopAll','CPU and memory released','2026-03-26 20:56:50'),(139,'StopAll','CPU and memory released','2026-03-26 20:56:50'),(140,'StopAll','CPU and memory released','2026-03-26 20:56:50'),(141,'StopAll','CPU and memory released','2026-03-26 20:56:50'),(142,'StopAll','CPU and memory released','2026-03-26 20:56:51'),(143,'StopAll','CPU and memory released','2026-03-26 20:56:51'),(144,'StopAll','CPU and memory released','2026-03-26 20:56:51'),(145,'StopAll','CPU and memory released','2026-03-26 20:56:51'),(146,'CPU','Started','2026-03-26 21:16:57'),(147,'CPU','Started','2026-03-26 21:17:00'),(148,'CPU','Started','2026-03-26 21:17:05'),(149,'CPU','Started','2026-03-26 21:17:08'),(150,'CPU','Started','2026-03-26 21:17:13'),(151,'CPU','Started','2026-03-26 21:17:18'),(152,'CPU','Started','2026-03-26 21:17:21'),(153,'CPU','Started','2026-03-26 21:17:23'),(154,'StopAll','CPU and memory released','2026-03-26 21:18:15'),(155,'CPU','Started','2026-03-26 21:23:47'),(156,'CPU','Started','2026-03-26 21:23:49'),(157,'CPU','Started','2026-03-26 21:23:50'),(158,'CPU','Started','2026-03-26 21:44:58'),(159,'CPU','Started','2026-03-26 21:44:59'),(160,'CPU','Started','2026-03-26 21:45:01'),(161,'CPU','Started','2026-03-26 21:45:02'),(162,'CPU','Started','2026-03-26 21:46:38'),(163,'CPU','Started','2026-03-26 21:46:50'),(164,'StopAll','CPU and memory released','2026-03-26 21:47:54'),(165,'StopAll','CPU and memory released','2026-03-26 21:47:56');
 /*!40000 ALTER TABLE `simulationlogs` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `transactions`
+--
+
+DROP TABLE IF EXISTS `transactions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `transactions` (
+  `Id` char(36) CHARACTER SET ascii COLLATE ascii_general_ci NOT NULL,
+  `TransactionId` char(36) CHARACTER SET ascii COLLATE ascii_general_ci NOT NULL,
+  `Reference` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `FromUserId` char(36) CHARACTER SET ascii COLLATE ascii_general_ci NOT NULL,
+  `ToUserId` char(36) CHARACTER SET ascii COLLATE ascii_general_ci NOT NULL,
+  `Amount` decimal(65,30) NOT NULL,
+  `Currency` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `Status` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `FailureReason` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `CreatedAt` datetime(6) NOT NULL,
+  `CompletedAt` datetime(6) DEFAULT NULL,
+  PRIMARY KEY (`Id`),
+  UNIQUE KEY `IX_Transactions_Reference` (`Reference`),
+  UNIQUE KEY `IX_Transactions_TransactionId` (`TransactionId`),
+  KEY `IX_Transactions_FromUserId` (`FromUserId`),
+  KEY `IX_Transactions_ToUserId` (`ToUserId`),
+  CONSTRAINT `FK_Transactions_Users_FromUserId` FOREIGN KEY (`FromUserId`) REFERENCES `users` (`Id`) ON DELETE RESTRICT,
+  CONSTRAINT `FK_Transactions_Users_ToUserId` FOREIGN KEY (`ToUserId`) REFERENCES `users` (`Id`) ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `transactions`
+--
+
+LOCK TABLES `transactions` WRITE;
+/*!40000 ALTER TABLE `transactions` DISABLE KEYS */;
+INSERT INTO `transactions` VALUES ('032ea07e-1168-4d12-b086-6dbc805714be','13e07b20-2cf3-4d15-a97d-b058c3cd2f88','TXN-20260401-13E07B20','a1b2c3d4-0000-0000-0000-000000000001','a1b2c3d4-0000-0000-0000-000000000002',100.000000000000000000000000000000,'USD','SUCCESS',NULL,'2026-04-01 11:40:09.633995','2026-04-01 11:40:09.633995'),('09929bf7-0c62-4990-b82d-177fbc8aadbe','5d97b5ee-9711-4664-8563-f021cf0595ee','TXN-20260401-5D97B5EE','a1b2c3d4-0000-0000-0000-000000000001','a1b2c3d4-0000-0000-0000-000000000002',100.000000000000000000000000000000,'USD','SUCCESS',NULL,'2026-04-01 11:40:16.851235','2026-04-01 11:40:16.851235'),('12a3f288-b9ac-4ff2-8eaf-6ab85c728617','2234571a-f244-4959-bcd5-52af50a4a7d9','TXN-20260401-2234571A','a1b2c3d4-0000-0000-0000-000000000001','a1b2c3d4-0000-0000-0000-000000000002',100.000000000000000000000000000000,'USD','SUCCESS',NULL,'2026-04-01 12:15:44.532494','2026-04-01 12:15:44.532494'),('147a345b-16ca-4fd7-8148-6e17a6276642','aea3e157-64ae-4739-a349-ad7e0ee22d42','TXN-20260401-AEA3E157','a1b2c3d4-0000-0000-0000-000000000001','a1b2c3d4-0000-0000-0000-000000000002',10.000000000000000000000000000000,'USD','SUCCESS',NULL,'2026-04-01 11:15:09.348502','2026-04-01 11:15:09.348502'),('19131208-6116-41ce-9495-f0b23ff55450','b60e9f8a-44b9-4023-8c87-056d5d94143f','TXN-20260401-B60E9F8A','a1b2c3d4-0000-0000-0000-000000000001','a1b2c3d4-0000-0000-0000-000000000002',10.000000000000000000000000000000,'USD','SUCCESS',NULL,'2026-04-01 11:14:41.184774','2026-04-01 11:14:41.184774'),('1b5a72c7-e1a4-4e45-855a-dd36601e4e47','2b273b0f-fa0c-4358-82ae-56518c35a30a','TXN-20260401-2B273B0F','a1b2c3d4-0000-0000-0000-000000000001','a1b2c3d4-0000-0000-0000-000000000002',50.000000000000000000000000000000,'USD','SUCCESS',NULL,'2026-04-01 10:46:45.338823','2026-04-01 10:46:45.338823'),('1f10177c-92d8-46cb-8646-f3dd5a52ce67','0033a258-2fa9-4820-9738-de79997152bb','TXN-20260401-0033A258','a1b2c3d4-0000-0000-0000-000000000001','a1b2c3d4-0000-0000-0000-000000000002',100.000000000000000000000000000000,'USD','SUCCESS',NULL,'2026-04-01 11:40:12.565683','2026-04-01 11:40:12.565683'),('2441cf5c-8e17-48cb-9b70-a00109afc86e','532b1489-fecd-4ce3-bde2-2b7bbcb8fd5f','TXN-20260401-532B1489','a1b2c3d4-0000-0000-0000-000000000001','a1b2c3d4-0000-0000-0000-000000000002',10.000000000000000000000000000000,'USD','SUCCESS',NULL,'2026-04-01 11:13:46.020841','2026-04-01 11:13:46.020841'),('2f68bb95-8d5d-479d-a60d-532b7bd487eb','550e8400-e29b-41d4-a716-446655440000','TXN-20260401-550E8400','a1b2c3d4-0000-0000-0000-000000000001','a1b2c3d4-0000-0000-0000-000000000002',250.000000000000000000000000000000,'USD','SUCCESS',NULL,'2026-04-01 09:35:20.155308','2026-04-01 09:35:20.155308'),('33edecb1-bfef-4f5c-87f8-fe1331f89f6e','e578cb69-4759-4a17-bc8b-e50d03f5f1b5','TXN-20260401-E578CB69','a1b2c3d4-0000-0000-0000-000000000001','a1b2c3d4-0000-0000-0000-000000000002',50.000000000000000000000000000000,'USD','SUCCESS',NULL,'2026-04-01 11:13:11.874723','2026-04-01 11:13:11.874723'),('49668a04-3161-4e54-9af5-dfd2deb00b76','4fa7b9da-8125-4da0-996f-5ba926c8bf14','TXN-20260401-4FA7B9DA','a1b2c3d4-0000-0000-0000-000000000001','a1b2c3d4-0000-0000-0000-000000000002',100.000000000000000000000000000000,'USD','SUCCESS',NULL,'2026-04-01 11:40:17.878243','2026-04-01 11:40:17.878243'),('5472fc3a-4544-4ad3-b978-7f6ab86b6b8c','9957fde8-10b9-4eb3-a1b9-d9c13d15357b','TXN-20260401-9957FDE8','a1b2c3d4-0000-0000-0000-000000000001','a1b2c3d4-0000-0000-0000-000000000002',50.000000000000000000000000000000,'USD','SUCCESS',NULL,'2026-04-01 11:13:27.473552','2026-04-01 11:13:27.473552'),('5bdcb1f9-b2b0-4eef-b996-64bd551682a3','3c9c6ed9-ddf0-47d1-ad90-40f3155a702f','TXN-20260401-3C9C6ED9','a1b2c3d4-0000-0000-0000-000000000001','a1b2c3d4-0000-0000-0000-000000000002',100.000000000000000000000000000000,'USD','SUCCESS',NULL,'2026-04-01 11:40:06.383856','2026-04-01 11:40:06.383856'),('703d0a33-78c3-40ba-943b-bda15e72523a','edcdc886-0f1c-49ff-ae9c-db924cb90d73','TXN-20260401-EDCDC886','a1b2c3d4-0000-0000-0000-000000000001','a1b2c3d4-0000-0000-0000-000000000002',100.000000000000000000000000000000,'USD','SUCCESS',NULL,'2026-04-01 11:12:55.911032','2026-04-01 11:12:55.911032'),('79f15a06-7990-41b4-9992-e95a242b7f95','8718a8d2-60d3-486b-b577-76dc07092142','TXN-20260401-8718A8D2','a1b2c3d4-0000-0000-0000-000000000001','a1b2c3d4-0000-0000-0000-000000000002',100.000000000000000000000000000000,'USD','SUCCESS',NULL,'2026-04-01 11:40:18.836885','2026-04-01 11:40:18.836885'),('8dc0fdf4-4d6b-4746-8d32-3fb6f7102204','c7f1e683-57d5-4d09-a9f1-7f9a7f4619be','TXN-20260401-C7F1E683','a1b2c3d4-0000-0000-0000-000000000001','a1b2c3d4-0000-0000-0000-000000000002',100.000000000000000000000000000000,'USD','SUCCESS',NULL,'2026-04-01 11:40:21.946546','2026-04-01 11:40:21.946546'),('9776f6e5-6078-4683-9f91-0856ac43deab','6d6ea2e3-8aa8-4848-bf4e-a210ceed9d6e','TXN-20260401-6D6EA2E3','a1b2c3d4-0000-0000-0000-000000000002','a1b2c3d4-0000-0000-0000-000000000001',25.000000000000000000000000000000,'USD','SUCCESS',NULL,'2026-04-01 11:13:34.967549','2026-04-01 11:13:34.967549'),('ac8a4b9e-dcc5-4a79-bc40-7b8b57addf89','f6a6e187-5640-4d40-96a5-89adf7c2add2','TXN-20260401-F6A6E187','a1b2c3d4-0000-0000-0000-000000000001','a1b2c3d4-0000-0000-0000-000000000002',100.000000000000000000000000000000,'USD','SUCCESS',NULL,'2026-04-01 11:40:20.843403','2026-04-01 11:40:20.843403'),('afb2d9f7-fc5a-4116-832a-e8efe3837efb','5346d619-cf5c-469a-bb3e-9ca40b7bc6b8','TXN-20260401-5346D619','a1b2c3d4-0000-0000-0000-000000000001','a1b2c3d4-0000-0000-0000-000000000002',10.000000000000000000000000000000,'USD','SUCCESS',NULL,'2026-04-01 11:13:48.411553','2026-04-01 11:13:48.411553'),('bb701674-de5e-4d9c-a428-dd3fa4f7dc48','46625834-bc9e-4767-8162-829af109c6a8','TXN-20260401-46625834','a1b2c3d4-0000-0000-0000-000000000001','a1b2c3d4-0000-0000-0000-000000000002',100.000000000000000000000000000000,'USD','SUCCESS',NULL,'2026-04-01 11:40:20.087897','2026-04-01 11:40:20.087897'),('c5a221eb-c7bb-485f-a194-31e3b206b318','f9cce315-d4e5-4c26-b68c-4b05b705b642','TXN-20260401-F9CCE315','a1b2c3d4-0000-0000-0000-000000000001','a1b2c3d4-0000-0000-0000-000000000002',10.000000000000000000000000000000,'USD','SUCCESS',NULL,'2026-04-01 11:13:43.808738','2026-04-01 11:13:43.808738'),('da3dfc83-0d5e-4d2e-a06e-4397beff5923','dcb27d64-8ac6-4d13-8656-d3986ae6a779','TXN-20260401-DCB27D64','a1b2c3d4-0000-0000-0000-000000000001','a1b2c3d4-0000-0000-0000-000000000002',100.000000000000000000000000000000,'USD','SUCCESS',NULL,'2026-04-01 11:40:22.136305','2026-04-01 11:40:22.136305'),('de634da0-3989-406e-aa31-1f49728e8a61','752afc30-6414-4f73-a0cb-573604c705f5','TXN-20260401-752AFC30','a1b2c3d4-0000-0000-0000-000000000001','a1b2c3d4-0000-0000-0000-000000000002',100.000000000000000000000000000000,'USD','SUCCESS',NULL,'2026-04-01 11:40:15.532644','2026-04-01 11:40:15.532644'),('dffdec27-d642-42ee-ad13-062248dba607','aa90116b-b99c-4ffb-af04-85b4e772fa88','TXN-20260401-AA90116B','a1b2c3d4-0000-0000-0000-000000000001','a1b2c3d4-0000-0000-0000-000000000002',100.000000000000000000000000000000,'USD','SUCCESS',NULL,'2026-04-01 11:40:10.992033','2026-04-01 11:40:10.992033'),('f31a1b81-c45b-4cc7-b16c-4af69934af82','4074efdc-9b49-4981-bf6e-8c873fe9fb17','TXN-20260401-4074EFDC','a1b2c3d4-0000-0000-0000-000000000001','a1b2c3d4-0000-0000-0000-000000000002',10.000000000000000000000000000000,'USD','SUCCESS',NULL,'2026-04-01 11:14:39.955660','2026-04-01 11:14:39.955660'),('f4e49f21-7b82-44b0-b45a-ee7f288058d3','d41cb7e2-8dbf-4e44-bc48-32f507d716bf','TXN-20260401-D41CB7E2','a1b2c3d4-0000-0000-0000-000000000001','a1b2c3d4-0000-0000-0000-000000000002',10.000000000000000000000000000000,'USD','SUCCESS',NULL,'2026-04-01 11:14:39.223631','2026-04-01 11:14:39.223631'),('f51fe627-ce6d-4473-82cd-09fd1ce76d34','0177f5e6-5362-4ee3-86c2-ee10befe382a','TXN-20260401-0177F5E6','a1b2c3d4-0000-0000-0000-000000000001','a1b2c3d4-0000-0000-0000-000000000002',100.000000000000000000000000000000,'USD','SUCCESS',NULL,'2026-04-01 12:00:50.959640','2026-04-01 12:00:50.959640'),('f6ac45c5-0622-4e22-990d-6878223c457f','a635841b-1add-48ac-8e5b-d4203c5e9516','TXN-20260401-A635841B','a1b2c3d4-0000-0000-0000-000000000001','a1b2c3d4-0000-0000-0000-000000000002',100.000000000000000000000000000000,'USD','SUCCESS',NULL,'2026-04-01 11:39:00.066953','2026-04-01 11:39:00.066953');
+/*!40000 ALTER TABLE `transactions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `users` (
+  `Id` char(36) CHARACTER SET ascii COLLATE ascii_general_ci NOT NULL,
+  `FullName` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `Email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `AccountNumber` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `Currency` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `Balance` decimal(65,30) NOT NULL,
+  `ReservedBalance` decimal(65,30) NOT NULL,
+  `IsActive` tinyint(1) NOT NULL,
+  `CreatedAt` datetime(6) NOT NULL,
+  PRIMARY KEY (`Id`),
+  UNIQUE KEY `IX_Users_AccountNumber` (`AccountNumber`),
+  UNIQUE KEY `IX_Users_Email` (`Email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users`
+--
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES ('a1b2c3d4-0000-0000-0000-000000000001','Alice Johnson','alice@example.com','ACC-000001','USD',997955.000000000000000000000000000000,0.000000000000000000000000000000,1,'2026-01-01 00:00:00.000000'),('a1b2c3d4-0000-0000-0000-000000000002','Bob Smith','bob@example.com','ACC-000002','USD',12045.000000000000000000000000000000,0.000000000000000000000000000000,1,'2026-01-01 00:00:00.000000');
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -50,4 +146,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-03-31 14:57:42
+-- Dump completed on 2026-04-01 17:57:32
