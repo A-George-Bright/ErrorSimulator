@@ -47,92 +47,92 @@
 <br>
 <!-- 🎛️ FUNCTIONS SECTION -->
 <h2 class="section-title">Functions</h2>
-<div class="grid">
+<div class="grid grid-2">
 
   <!-- CPU -->
   <div class="card">
-    <h3>🔥 CPU</h3>
-    <span class="tooltip-wrap">
-      <button class="btn danger" (click)="run('cpu')">Start</button>
-      <span class="tooltip">Spike CPU to high load across all cores</span>
-    </span>
-    <span class="tooltip-wrap">
-      <button class="btn warning" (click)="run('cpuReduce')">Reduce</button>
-      <span class="tooltip">Gradually reduce CPU load by 10% per second</span>
-    </span>
-    <span class="tooltip-wrap">
-      <button class="btn success" (click)="run('cpuStop')">Stop</button>
-      <span class="tooltip">Immediately stop all CPU stress threads</span>
-    </span>
+    <div class="card-header">
+      <span class="card-icon">🔥</span>
+      <h3>CPU</h3>
+      <span class="card-tag tag-resource">Resource</span>
+    </div>
+    <p class="card-desc">Stress-test processor across all cores</p>
+    <div class="card-actions">
+      <button class="btn danger" (click)="run('cpu')" title="Spike CPU to high load across all cores">Start</button>
+      <button class="btn warning" (click)="run('cpuReduce')" title="Gradually reduce CPU load by 10% per second">Reduce</button>
+      <button class="btn success" (click)="run('cpuStop')" title="Immediately stop all CPU stress threads">Stop</button>
+    </div>
   </div>
 
   <!-- MEMORY -->
   <div class="card">
-    <h3>🧠 Memory</h3>
-    <span class="tooltip-wrap">
-      <button class="btn primary" (click)="run('memoryStart')">Allocate</button>
-      <span class="tooltip">Allocate 2 GB of memory to simulate pressure</span>
-    </span>
-    <span class="tooltip-wrap">
-      <button class="btn success" (click)="run('memoryStop')">Release</button>
-      <span class="tooltip">Release all allocated memory and trigger GC</span>
-    </span>
+    <div class="card-header">
+      <span class="card-icon">🧠</span>
+      <h3>Memory</h3>
+      <span class="card-tag tag-resource">Resource</span>
+    </div>
+    <p class="card-desc">Allocate or release memory pressure</p>
+    <div class="card-actions">
+      <button class="btn primary" (click)="run('memoryStart')" title="Allocate 2 GB of memory to simulate pressure">Allocate</button>
+      <button class="btn success" (click)="run('memoryStop')" title="Release all allocated memory and trigger GC">Release</button>
+    </div>
   </div>
 
-  <!-- SLOW -->
+  <!-- LATENCY -->
   <div class="card">
-    <h3>🐢 Latency</h3>
-    <span class="tooltip-wrap">
-      <button class="btn warning" (click)="run('slow')">Fixed</button>
-      <span class="tooltip">Add a fixed 15-second delay to the response</span>
-    </span>
-    <span class="tooltip-wrap">
-      <button class="btn warning" (click)="run('slowRandom')">Random</button>
-      <span class="tooltip">Add a random 5-10 second delay to the response</span>
-    </span>
+    <div class="card-header">
+      <span class="card-icon">🐢</span>
+      <h3>Latency</h3>
+      <span class="card-tag tag-network">Network</span>
+    </div>
+    <p class="card-desc">Inject response delays into API calls</p>
+    <div class="card-actions">
+      <button class="btn warning" (click)="run('slow')" title="Add a fixed 15-second delay to the response">Fixed</button>
+      <button class="btn warning" (click)="run('slowRandom')" title="Add a random 5-10 second delay to the response">Random</button>
+    </div>
   </div>
 
   <!-- DATABASE -->
   <div class="card">
-    <h3>💾 Database</h3>
-    <span class="tooltip-wrap">
-      <button class="btn danger" (click)="run('dbDown')">Down</button>
-      <span class="tooltip">Simulate a complete database outage</span>
-    </span>
-    <span class="tooltip-wrap">
-      <button class="btn warning" (click)="run('dbTimeout')">Timeout</button>
-      <span class="tooltip">Make all database queries timeout</span>
-    </span>
-    <span class="tooltip-wrap">
-      <button class="btn primary" (click)="run('dbIntermittent')">Intermittent</button>
-      <span class="tooltip">Database fails randomly on some requests</span>
-    </span>
-    <span class="tooltip-wrap">
-      <button class="btn success" (click)="run('dbReset')">Reset</button>
-      <span class="tooltip">Restore database to normal operation</span>
-    </span>
+    <div class="card-header">
+      <span class="card-icon">💾</span>
+      <h3>Database</h3>
+      <span class="card-tag tag-infra">Infra</span>
+    </div>
+    <p class="card-desc">Simulate database failures and outages</p>
+    <div class="card-actions">
+      <button class="btn danger" (click)="run('dbDown')" title="Simulate a complete database outage">Down</button>
+      <button class="btn warning" (click)="run('dbTimeout')" title="Make all database queries timeout">Timeout</button>
+      <button class="btn primary" (click)="run('dbIntermittent')" title="Database fails randomly on some requests">Intermittent</button>
+      <button class="btn success" (click)="run('dbReset')" title="Restore database to normal operation">Reset</button>
+    </div>
   </div>
 
   <!-- ERRORS -->
   <div class="card">
-    <h3>💥 Errors</h3>
-    <span class="tooltip-wrap">
-      <button class="btn danger" (click)="run('exception')">Exception</button>
-      <span class="tooltip">Trigger a manual 500 Internal Server Error</span>
-    </span>
-    <span class="tooltip-wrap">
-      <button class="btn danger" (click)="run('stack')">Stack</button>
-      <span class="tooltip">Simulate a deep recursive stack overflow</span>
-    </span>
+    <div class="card-header">
+      <span class="card-icon">💥</span>
+      <h3>Errors</h3>
+      <span class="card-tag tag-failure">Failure</span>
+    </div>
+    <p class="card-desc">Trigger exceptions and stack overflows</p>
+    <div class="card-actions">
+      <button class="btn danger" (click)="run('exception')" title="Trigger a manual 500 Internal Server Error">Exception</button>
+      <button class="btn danger" (click)="run('stack')" title="Simulate a deep recursive stack overflow">Stack</button>
+    </div>
   </div>
 
-  <!-- GLOBAL -->
-  <div class="card">
-    <h3>⚙️ Control</h3>
-    <span class="tooltip-wrap">
-      <button class="btn neutral" (click)="run('stopAll')">Stop All</button>
-      <span class="tooltip">Stop all running simulations and reset everything</span>
-    </span>
+  <!-- CONTROL -->
+  <div class="card card-control">
+    <div class="card-header">
+      <span class="card-icon">⚙️</span>
+      <h3>Control</h3>
+      <span class="card-tag tag-control">System</span>
+    </div>
+    <p class="card-desc">Stop all running simulations at once</p>
+    <div class="card-actions">
+      <button class="btn neutral" (click)="run('stopAll')" title="Stop all running simulations and reset everything">Stop All</button>
+    </div>
   </div>
 
 </div>

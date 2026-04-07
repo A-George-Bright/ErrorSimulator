@@ -1,6 +1,7 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { ThemeService } from './theme.service';
 
 @Component({
   selector: 'app-root',
@@ -12,4 +13,6 @@ import { CommonModule } from '@angular/common';
 
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class App {}
+export class App {
+  theme = inject(ThemeService);
+}
