@@ -268,6 +268,6 @@
                 usedMemoryMb,
                 memoryLoadPercent
             };
-        }
+        } 
     }
 }

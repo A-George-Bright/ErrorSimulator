@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /c/Users/AllbinKGeorge/Music/ErrorSimulator/frontend/error-simulator-ui/src -type f \\\\\\( -name \"*.html\" -o -name \"*.md\" \\\\\\) -exec grep -l -i \"ai\\\\|assistant\\\\|chat\\\\|prompt\\\\|llm\\\\|openai\\\\|claude\\\\|gemini\\\\|copilot\\\\|suggest\\\\|analyze\\\\|intelligence\" {} \\\\;)",
+      "Bash(npx ng:*)"
+    ]
+  }
+}
