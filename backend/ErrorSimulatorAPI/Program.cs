@@ -32,13 +32,18 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<SimulationService>();
 builder.Services.AddSingleton<FailureSimulator>();
 builder.Services.AddSingleton<SimulationState>();
+builder.Services.AddSingleton<SimulationDbInterceptor>();
 
 builder.Services.AddScoped<ITransferService, TransferService>();
 
-// 🗄️ MYSQL (Pomelo)
+// 🗄️ MYSQL (Pomelo) — interceptor wired into every DbContext instance
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")!;
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 45))));
+builder.Services.AddDbContext<AppDbContext>((provider, options) =>
+{
+    options.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 45)));
+    // Register the interceptor so every EF Core command goes through pressure logic
+    options.AddInterceptors(provider.GetRequiredService<SimulationDbInterceptor>());
+});
 
 // CORS
 builder.Services.AddCors(options =>
